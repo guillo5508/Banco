@@ -2,7 +2,7 @@ package clasesBanco;
 
 import java.io.Serializable;
 
-public class SAÃ±adirNomina implements Serializable {
+public class SAñadirNomina implements Serializable {
 
 	/**
 	 * 

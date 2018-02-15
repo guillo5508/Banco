@@ -10,7 +10,7 @@ public class Banco implements Serializable {
 	private Naturales[] listaClientesNaturales;
 	private Juridicos[] listaClientesJuridicos;
 	private SPagoNomina[] listaSPagoNomina;
-	private SAÃ±adirNomina[] listaSAÃ±adirNomina;
+	private SAñadirNomina[] listaSAñadirNomina;
 	private Gerente gerente;
 	private Asesor[] listaAsesores;
 	private Cajero[] listaCajeros;
@@ -39,12 +39,12 @@ public class Banco implements Serializable {
 		this.listaSPagoNomina = listaSPagoNomina;
 	}
 
-	public SAÃ±adirNomina[] getListaSAÃ±adirNomina() {
-		return listaSAÃ±adirNomina;
+	public SAñadirNomina[] getListaSAñadirNomina() {
+		return listaSAñadirNomina;
 	}
 
-	public void setListaSAÃ±adirNomina(SAÃ±adirNomina[] listaSAÃ±adirNomina) {
-		this.listaSAÃ±adirNomina = listaSAÃ±adirNomina;
+	public void setListaSAñadirNomina(SAñadirNomina[] listaSAñadirNomina) {
+		this.listaSAñadirNomina = listaSAñadirNomina;
 	}
 
 	public Gerente getGerente() {
