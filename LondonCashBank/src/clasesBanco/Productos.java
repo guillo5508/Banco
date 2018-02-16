@@ -12,15 +12,40 @@ public abstract class Productos implements Serializable {
 	private boolean estadoCuenta;
 	private String fechaCreacion;
 	private double saldo;
+	private Tarjeta tarjeta;
+	private String clave;
+	
 	
 
-	public Productos(String numCuenta, String tipoCUenta, boolean estadoCuenta, String fechaCreacion, double saldo) {
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	public Tarjeta getTarjeta() {
+		return tarjeta;
+	}
+
+	public void setTarjeta(Tarjeta tarjeta) {
+		this.tarjeta = tarjeta;
+	}
+
+	public Productos(String numCuenta, String tipoCUenta, boolean estadoCuenta, String fechaCreacion, double saldo, String clave) {
 		super();
 		this.numCuenta = numCuenta;
 		this.tipoCUenta = tipoCUenta;
 		this.estadoCuenta = estadoCuenta;
 		this.fechaCreacion = fechaCreacion;
 		this.saldo = saldo;
+		this.tarjeta = null;
+		this.clave=clave;
+	}
+
+	public Productos() {
+
 	}
 
 	public String getNumCuenta() {

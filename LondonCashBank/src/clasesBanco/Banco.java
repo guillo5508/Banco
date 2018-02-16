@@ -1,19 +1,31 @@
 package clasesBanco;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Banco implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5787451824509045998L;
-	private Naturales[] listaClientesNaturales;
-	private Juridicos[] listaClientesJuridicos;
-	private SPagoNomina[] listaSPagoNomina;
-	private SAñadirNomina[] listaSAñadirNomina;
+	private Naturales[] listaClientesNaturales= new Naturales[0];
+	private Juridicos[] listaClientesJuridicos = new Juridicos[0];
+	private SPagoNomina[] listaSPagoNomina= new SPagoNomina[0];
+	private SAñadirNomina[] listaSAñadirNomina = new SAñadirNomina[0];
 	private Gerente gerente;
-	private Asesor[] listaAsesores;
-	private Cajero[] listaCajeros;
+	private Asesor[] listaAsesores= new Asesor[0];
+	private Cajero[] listaCajeros= new Cajero[0];
+	private Extracto[] listaMovimientosEmpleados= new Extracto[0];
+	
+	
+
+	public Extracto[] getListaMovimientosEmpleados() {
+		return listaMovimientosEmpleados;
+	}
+
+	public void setListaMovimientosEmpleados(Extracto[] listaMovimientosEmpleados) {
+		this.listaMovimientosEmpleados = listaMovimientosEmpleados;
+	}
 
 	public Naturales[] getListaClientesNaturales() {
 		return listaClientesNaturales;
@@ -74,4 +86,16 @@ public class Banco implements Serializable {
 	public Banco() {
 		super();
 	}
+	
+	public void crearExtractoBanco(String tipoTransaccion,String beneficiario, String valor, String tipoVentanilla, String idVentanilla,
+			String nombreActor) {
+		Extracto extracto = new Extracto(Utilidades.getFechaActual() + " " + Utilidades.getHoraActual(),
+				tipoTransaccion,beneficiario, valor, tipoVentanilla, idVentanilla, nombreActor);
+		this.listaMovimientosEmpleados = Arrays.copyOf(this.listaMovimientosEmpleados, this.listaMovimientosEmpleados.length + 1);
+		this.listaMovimientosEmpleados[this.listaMovimientosEmpleados.length - 1] = extracto;
+	}
+	
+	
+	
+	
 }

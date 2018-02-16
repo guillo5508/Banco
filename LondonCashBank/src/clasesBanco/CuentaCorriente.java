@@ -11,7 +11,7 @@ public class CuentaCorriente extends CuentaAhorros implements Serializable {
 
 	public CuentaCorriente(String numCuenta, String tipoCUenta, boolean estadoCuenta, String fechaCreacion,
 			double saldo) {
-		super(numCuenta, tipoCUenta, estadoCuenta, fechaCreacion, saldo);
+		super(numCuenta, tipoCUenta, estadoCuenta, fechaCreacion, saldo, fechaCreacion);
 		// TODO Auto-generated constructor stub
 	}
 

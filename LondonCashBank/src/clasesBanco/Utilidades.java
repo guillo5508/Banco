@@ -131,19 +131,51 @@ public class Utilidades {
 	
 	
 	
-	public static void escribirArchivoObjeto(String archivo, Extracto[] listaExtractos) {
+	public static void escribirArchivoObjeto(String archivo, Object[] listaExtractos) {
 		FileOutputStream fo = null;
 		ObjectOutputStream oI = null;
 		try {
 			fo = new FileOutputStream(archivo);
 			oI = new ObjectOutputStream(fo);
-			for (Extracto o : listaExtractos) {
+			for (Object o : listaExtractos) {
 				try {
 					oI.writeObject(o);
 				} catch (IOException e) {
 					System.out.println("problema al crear las clases");
 				}
 			}
+		} catch (FileNotFoundException e) {
+			System.out.println("problemas con la direcion para crear el fichero");
+		} catch (IOException e) {
+			System.out.println("el fichero tiene problemas al crearse");
+		} finally {
+			try {
+				if (fo != null) {
+					fo.close();
+				}
+				if (oI != null) {
+					oI.close();
+				}
+
+			} catch (IOException e) {
+				System.out.println("no se pudo cerrar el archivo");
+			}
+		}
+	}
+	
+	
+	public static void escribirArchivoBanco(String archivo, Banco banco) {
+		FileOutputStream fo = null;
+		ObjectOutputStream oI = null;
+		try {
+			fo = new FileOutputStream(archivo);
+			oI = new ObjectOutputStream(fo);
+				try {
+					oI.writeObject(banco);
+				} catch (IOException e) {
+					System.out.println("problema al crear las clases");
+				}
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("problemas con la direcion para crear el fichero");
 		} catch (IOException e) {
@@ -202,11 +234,12 @@ public class Utilidades {
 	public static String crearIdServicio() {
 		Calendar calendario = Calendar.getInstance();
 		calendario = new GregorianCalendar();
-		String hora, minutos, segundos;
+		String hora, minutos, segundos, milisegundos;
 		hora = Integer.toString(calendario.get(Calendar.HOUR_OF_DAY));
 		minutos = Integer.toString(calendario.get(Calendar.MINUTE));
 		segundos = Integer.toString(calendario.get(Calendar.SECOND));
-		String i = hora + minutos + segundos;
+		milisegundos= Integer.toString(calendario.get(Calendar.MILLISECOND));
+		String i = hora + minutos + segundos + milisegundos;
 		return i;
 	}
 	

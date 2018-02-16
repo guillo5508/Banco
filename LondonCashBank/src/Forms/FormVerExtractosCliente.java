@@ -52,7 +52,7 @@ public class FormVerExtractosCliente extends JFrame {
 		scrollPane.setBounds(46, 75, 616, 288);
 		contentPane.add(scrollPane);
 
-		String[] titulos = { "Tipo transacción", "Fecha", "Valor", "Actor" };// se crea un arreglo con los titulos de
+		String[] titulos = { "Tipo transacción", "Fecha", "Valor", "Actor", "beneficiario" };// se crea un arreglo con los titulos de
 																				// las columnas que queremos mostrar en
 																				// tabla
 		DefaultTableModel modelo = new DefaultTableModel(titulos, 0);// creamos un objeto DefaultTableModel al que le
@@ -88,7 +88,7 @@ public class FormVerExtractosCliente extends JFrame {
 																	// del comboBox
 						for (int i = 0; i < auxiliar.length; i++) {
 							String[] valores = { auxiliar[i].getTipoTransaccion(), auxiliar[i].getFecha(),
-									cliente.getExtracto()[i].getValor(), auxiliar[i].getNombreActor() };
+									cliente.getExtracto()[i].getValor(), auxiliar[i].getNombreActor(), auxiliar[i].getBeneficiario()};
 							modelo.addRow(valores); // todos los valores que deseamos incluir en nuestra tabla los
 													// pedimos y
 							// los ingresamos en un arreglo de valores que luego le pasamos a la tabla como

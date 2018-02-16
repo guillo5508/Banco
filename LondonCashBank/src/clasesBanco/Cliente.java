@@ -184,9 +184,9 @@ public abstract class Cliente implements Serializable {
 	}
 
 	public void crearExtracto(String tipoTransaccion, String valor, String tipoVentanilla, String idVentanilla,
-			String nombreActor) {
+			String nombreActor, String beneficiario) {
 		Extracto extracto = new Extracto(Utilidades.getFechaActual() + " " + Utilidades.getHoraActual(),
-				tipoTransaccion, valor, tipoVentanilla, idVentanilla, nombreActor);
+				tipoTransaccion, valor, tipoVentanilla, idVentanilla, nombreActor, beneficiario);
 		this.listaExtractos = Arrays.copyOf(this.listaExtractos, this.listaExtractos.length + 1);
 		this.listaExtractos[this.listaExtractos.length - 1] = extracto;
 
@@ -209,7 +209,7 @@ public abstract class Cliente implements Serializable {
 								.compareTo(claveAntigua) == 0) {
 							nombre = banco.getListaClientesNaturales()[indice.getX()].getNombre();
 							banco.getListaClientesNaturales()[indice.getX()].setClaveAcceso(reClaveNueva);
-							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre);
+							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre, nombre);
 							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
 							throw new ExceptionTransaccion("La clave antigua no coincide con la clave actual");
@@ -219,7 +219,7 @@ public abstract class Cliente implements Serializable {
 								.compareTo(claveAntigua) == 0) {
 							nombre = banco.getListaClientesJuridicos()[indice.getX()].getNombre();
 							banco.getListaClientesJuridicos()[indice.getX()].setClaveAcceso(reClaveNueva);
-							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre);
+							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre, nombre);
 							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
 							throw new ExceptionTransaccion("La clave antigua no coincide con la clave actual");
@@ -290,7 +290,8 @@ public abstract class Cliente implements Serializable {
 							identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice.getY()]
 									.setSaldo(aux + Double.valueOf(valor));
 							if (operacion.compareTo("consignacion") == 0) {
-								crearExtracto("consignación", valor, tipoVentanilla, idVentanilla, nombreActor);
+								crearExtracto("consignación", valor, tipoVentanilla, idVentanilla, nombreActor,
+										identificadorDeLista(numCuenta, banco)[indice.getX()].getNombre());
 								Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 							}
 						}
@@ -333,7 +334,7 @@ public abstract class Cliente implements Serializable {
 											.getY()].setSaldo(aux - Double.valueOf(valor));
 									String nombre = identificadorDeLista(numCuenta, banco)[indice.getX()].getNombre();
 									if (operacion.compareTo("retiro") == 0) {
-										crearExtracto("retiro", valor, tipoVentanilla, idVentanilla, nombre);
+										crearExtracto("retiro", valor, tipoVentanilla, idVentanilla, nombre, nombre);
 										Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 									}
 								}
@@ -372,7 +373,12 @@ public abstract class Cliente implements Serializable {
 								"transferencia");
 						consignar(numCuentaDestino, tipoCuentaDestino, monto, banco, "cajero", "1234", "guillermo",
 								"transferencia");
-						crearExtracto("transferencia", monto, "cajero", "1234", "guillermo");
+						Cliente[] listaClientes = identificadorDeLista(numCuentaDestino, banco);
+						Posicion i = buscarClienteCuenta(numCuentaDestino, banco, tipoCuentaDestino);
+						Cliente[] listaClientes1 = identificadorDeLista(numCuentaOrigen, banco);
+						Posicion j = buscarClienteCuenta(numCuentaOrigen, banco, tipoCuentaOrigen);
+						crearExtracto("transferencia", monto, "cajero", "1234", listaClientes1[j.getX()].getNombre(),
+								listaClientes[i.getX()].getNombre());
 						Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 					}
 				}
@@ -407,7 +413,7 @@ public abstract class Cliente implements Serializable {
 	}
 
 	public static void main(String[] args) {
-		CuentaAhorros n = new CuentaAhorros("01468", "ahorros", true, "01/04/2015", 20000);
+		CuentaAhorros n = new CuentaAhorros("01468", "ahorros", true, "01/04/2015", 20000, "1234");
 		CuentaAhorros m = new CuentaCorriente("02469", "corriente", true, "01/04/2015", 0);
 		Productos[] lista = new Productos[2];
 		lista[0] = n;
@@ -421,7 +427,7 @@ public abstract class Cliente implements Serializable {
 		banco.setListaClientesNaturales(listaClientes);
 
 		try {
-			guillermo.consignar("01468", "ahorros", "2000", banco, "cajero", "1234", "guillermo", "consignacion");
+			guillermo.consignar("01468", "ahorros", "2000", banco, "cajero", "1234", "Melissa", "consignacion");
 			System.out.println(guillermo.getListaProductos()[0].getSaldo());
 			guillermo.retirar("01468", "ahorros", "2000", banco, "1234", "cajero", "1234", "retiro");
 			System.out.println(guillermo.getListaProductos()[0].getSaldo());
