@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import clasesBanco.Banco;
 import clasesBanco.Utilidades;
 
 import javax.swing.JTextField;
@@ -22,12 +23,12 @@ import java.util.GregorianCalendar;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormLogin extends JFrame implements Runnable {
 	private JTextField textField;
 	private JPasswordField passwordField;
-	
-	
 
 	public JTextField getTextField() {
 		return textField;
@@ -68,7 +69,7 @@ public class FormLogin extends JFrame implements Runnable {
 	/**
 	 * Create the frame.
 	 */
-	public FormLogin() {
+	public FormLogin(Banco banco) {
 		h1 = new Thread(this);
 		h1.start();
 		setResizable(false);
@@ -97,6 +98,16 @@ public class FormLogin extends JFrame implements Runnable {
 		getContentPane().add(passwordField);
 
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (textField.getText().compareTo(banco.getGerente().getIdTrabajador()) == 0 && String
+						.valueOf(passwordField.getPassword()).compareTo(banco.getGerente().getClaveAcceso()) == 0) {
+					FormPrincipal ventana = new FormPrincipal(banco.getGerente());
+					ventana.setVisible(true);
+					dispose();
+				}
+			}
+		});
 		btnIngresar.setForeground(Color.BLACK);
 		btnIngresar.setBackground(Color.WHITE);
 		btnIngresar.setFont(new Font("Segoe UI Black", Font.ITALIC, 14));

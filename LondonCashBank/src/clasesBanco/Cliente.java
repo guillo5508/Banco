@@ -420,8 +420,10 @@ public abstract class Cliente implements Serializable {
 		lista[1] = m;
 		Naturales guillermo = new Naturales("Guillermo", "32w", "sistemas", "EIA", "55555", "Natural", lista, "747484",
 				"1234");
+		Gerente gerente = new Gerente("Isis", "12345", "fjfro", "0000", "301", "1234", "gerente");
 
 		Banco banco = new Banco();
+		banco.setGerente(gerente);
 		Naturales[] listaClientes = new Naturales[1];
 		listaClientes[0] = guillermo;
 		banco.setListaClientesNaturales(listaClientes);
@@ -442,7 +444,7 @@ public abstract class Cliente implements Serializable {
 			System.out.println(guillermo.getListaProductos()[0].isEstadoCuenta());
 			FormVerExtractosCliente principal = new FormVerExtractosCliente(guillermo);
 			principal.setVisible(true);
-			FormLogin login = new FormLogin();
+			FormLogin login = new FormLogin(banco);
 			login.setVisible(true);
 		} catch (ExceptionCliente e) {
 			// TODO Auto-generated catch block

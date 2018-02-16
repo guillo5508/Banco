@@ -75,13 +75,22 @@ public class FormPrincipal extends JFrame implements Runnable {
 
 			JMenuItem mntmAadirANomina = new JMenuItem("A\u00F1adir a nomina");
 			mnAsesor.add(mntmAadirANomina);
+		} else if (actor.getClass().getName().compareTo("Gerente") == 0) {
+			JMenu mnGerente = new JMenu("Gerente");
+			menuBar.add(mnGerente);
+
+			JMenuItem mntmCrearTrabajador = new JMenuItem("Crear trabajador");
+			mnGerente.add(mntmCrearTrabajador);
 		}
 
 		JMenu mnCajero = new JMenu("Cajero");
 		menuBar.add(mnCajero);
 
-		JMenu mnGerente = new JMenu("Gerente");
-		menuBar.add(mnGerente);
+		JMenu mnAsesor_1 = new JMenu("Asesor");
+		menuBar.add(mnAsesor_1);
+
+		JMenuItem mntmCrearClienteNatural = new JMenuItem("Crear cliente natural");
+		mnAsesor_1.add(mntmCrearClienteNatural);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -90,5 +99,4 @@ public class FormPrincipal extends JFrame implements Runnable {
 		lbHora.setBounds(491, 0, 103, 32);
 		contentPane.add(lbHora);
 	}
-
 }
