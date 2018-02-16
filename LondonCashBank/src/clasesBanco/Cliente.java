@@ -1,4 +1,5 @@
 package clasesBanco;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -181,21 +182,23 @@ public abstract class Cliente implements Serializable {
 		}
 	}
 
-	public void crearExtracto(String tipoTransaccion, String valor, String tipoVentanilla, String idVentanilla, String nombreActor) {
+	public void crearExtracto(String tipoTransaccion, String valor, String tipoVentanilla, String idVentanilla,
+			String nombreActor) {
 		Extracto extracto = new Extracto(Utilidades.getFechaActual() + " " + Utilidades.getHoraActual(),
 				tipoTransaccion, valor, tipoVentanilla, idVentanilla, nombreActor);
 		this.listaExtractos = Arrays.copyOf(this.listaExtractos, this.listaExtractos.length + 1);
 		this.listaExtractos[this.listaExtractos.length - 1] = extracto;
+
 	}
 
-	public void cambiarClave(String idCliente, String claveAntigua, String claveNueva, String reClaveNueva, Banco banco, String idVentanilla, String tipoVentanilla)
-			throws ExceptionCliente, ExceptionTransaccion {
+	public void cambiarClave(String idCliente, String claveAntigua, String claveNueva, String reClaveNueva, Banco banco,
+			String idVentanilla, String tipoVentanilla) throws ExceptionCliente, ExceptionTransaccion {
 		if (idCliente.compareTo("") == 0 || claveAntigua.compareTo("") == 0 || claveNueva.compareTo("") == 0
 				|| reClaveNueva.compareTo("") == 0) {
 			throw new InputMismatchException("Alguno de los campos es erroneo o no se lleno correctamente");
 		} else {
 			Posicion indice = buscarClienteId(idCliente, banco);
-			String nombre="";
+			String nombre = "";
 			if (indice == null) {
 				throw new ExceptionCliente("Cliente no encontrado");
 			} else {
@@ -203,18 +206,20 @@ public abstract class Cliente implements Serializable {
 					if (indice.getY() == 0) {
 						if (banco.getListaClientesNaturales()[indice.getX()].getClaveAcceso()
 								.compareTo(claveAntigua) == 0) {
-							nombre=banco.getListaClientesNaturales()[indice.getX()].getNombre();
+							nombre = banco.getListaClientesNaturales()[indice.getX()].getNombre();
 							banco.getListaClientesNaturales()[indice.getX()].setClaveAcceso(reClaveNueva);
 							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre);
+							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
 							throw new ExceptionTransaccion("La clave antigua no coincide con la clave actual");
 						}
 					} else {
 						if (banco.getListaClientesJuridicos()[indice.getX()].getClaveAcceso()
 								.compareTo(claveAntigua) == 0) {
-							nombre= banco.getListaClientesJuridicos()[indice.getX()].getNombre();
+							nombre = banco.getListaClientesJuridicos()[indice.getX()].getNombre();
 							banco.getListaClientesJuridicos()[indice.getX()].setClaveAcceso(reClaveNueva);
 							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre);
+							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
 							throw new ExceptionTransaccion("La clave antigua no coincide con la clave actual");
 						}
@@ -261,7 +266,8 @@ public abstract class Cliente implements Serializable {
 	}
 
 	public void consignar(String numCuenta, String tipoCuenta, String valor, Banco banco, String tipoVentanilla,
-			String idVentanilla, String nombreActor, String operacion) throws ExceptionCliente, ExceptionCuentas, ExceptionTransaccion {
+			String idVentanilla, String nombreActor, String operacion)
+			throws ExceptionCliente, ExceptionCuentas, ExceptionTransaccion {
 		if (cuentaActiva(numCuenta, banco) == false) {
 			throw new ExceptionTransaccion("Transacción incorrecta, la cuenta esta bloqueada");
 		} else {
@@ -282,8 +288,10 @@ public abstract class Cliente implements Serializable {
 									.getListaProductos()[indice.getY()].getSaldo();
 							identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice.getY()]
 									.setSaldo(aux + Double.valueOf(valor));
-							if(operacion.compareTo("consignacion")==0)
+							if (operacion.compareTo("consignacion") == 0) {
 								crearExtracto("consignación", valor, tipoVentanilla, idVentanilla, nombreActor);
+								Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
+							}
 						}
 					}
 				}
@@ -291,8 +299,8 @@ public abstract class Cliente implements Serializable {
 		}
 	}
 
-	public void retirar(String numCuenta, String tipoCuenta, String valor, Banco banco, String clave, String tipoVentanilla,
-			String idVentanilla, String operacion)
+	public void retirar(String numCuenta, String tipoCuenta, String valor, Banco banco, String clave,
+			String tipoVentanilla, String idVentanilla, String operacion)
 			throws ExceptionCliente, ExceptionCuentas, ExceptionTransaccion {
 		if (cuentaActiva(numCuenta, banco) == false) {
 			throw new ExceptionTransaccion("Transacción incorrecta, la cuenta esta bloqueada");
@@ -323,8 +331,10 @@ public abstract class Cliente implements Serializable {
 									identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice
 											.getY()].setSaldo(aux - Double.valueOf(valor));
 									String nombre = identificadorDeLista(numCuenta, banco)[indice.getX()].getNombre();
-									if(operacion.compareTo("retiro")==0)
+									if (operacion.compareTo("retiro") == 0) {
 										crearExtracto("retiro", valor, tipoVentanilla, idVentanilla, nombre);
+										Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
+									}
 								}
 							}
 						}
@@ -357,9 +367,12 @@ public abstract class Cliente implements Serializable {
 					if (tipoCuentaDestino.compareTo("CDT") == 0) {
 						throw new ExceptionCuentas("La cuenta de destino no puede ser de tipo CDT");
 					} else {
-						retirar(numCuentaOrigen, tipoCuentaOrigen, monto, banco, clave, "cajero", "1234","transferencia");
-						consignar(numCuentaDestino, tipoCuentaDestino, monto, banco, "cajero", "1234", "guillermo","transferencia");
+						retirar(numCuentaOrigen, tipoCuentaOrigen, monto, banco, clave, "cajero", "1234",
+								"transferencia");
+						consignar(numCuentaDestino, tipoCuentaDestino, monto, banco, "cajero", "1234", "guillermo",
+								"transferencia");
 						crearExtracto("transferencia", monto, "cajero", "1234", "guillermo");
+						Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 					}
 				}
 			}
@@ -407,9 +420,9 @@ public abstract class Cliente implements Serializable {
 		banco.setListaClientesNaturales(listaClientes);
 
 		try {
-			guillermo.consignar("01468", "ahorros", "2000", banco, "cajero", "1234", "guillermo","consignacion");
+			guillermo.consignar("01468", "ahorros", "2000", banco, "cajero", "1234", "guillermo", "consignacion");
 			System.out.println(guillermo.getListaProductos()[0].getSaldo());
-			guillermo.retirar("01468", "ahorros", "2000", banco, "1234", "cajero", "1234","retiro");
+			guillermo.retirar("01468", "ahorros", "2000", banco, "1234", "cajero", "1234", "retiro");
 			System.out.println(guillermo.getListaProductos()[0].getSaldo());
 			guillermo.transferirCuenta("01468", "02469", "12000", "1234", banco);
 			System.out.println(guillermo.getListaProductos()[0].getSaldo());

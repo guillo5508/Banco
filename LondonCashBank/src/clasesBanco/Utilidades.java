@@ -1,6 +1,14 @@
 package clasesBanco;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Utilidades {
@@ -61,5 +69,77 @@ public class Utilidades {
         double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
         return ((int) dias);
     }
+	
+	
+	
+	public static void escribirArchivoObjeto(String archivo, Extracto[] listaExtractos) {
+		FileOutputStream fo = null;
+		ObjectOutputStream oI = null;
+		try {
+			fo = new FileOutputStream(archivo);
+			oI = new ObjectOutputStream(fo);
+			for (Extracto o : listaExtractos) {
+				try {
+					oI.writeObject(o);
+				} catch (IOException e) {
+					System.out.println("problema al crear las clases");
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("problemas con la direcion para crear el fichero");
+		} catch (IOException e) {
+			System.out.println("el fichero tiene problemas al crearse");
+		} finally {
+			try {
+				if (fo != null) {
+					fo.close();
+				}
+				if (oI != null) {
+					oI.close();
+				}
+
+			} catch (IOException e) {
+				System.out.println("no se pudo cerrar el archivo");
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	public static Extracto[] leerArchivoObjeto(String archivo) {
+		ObjectInputStream oI = null;
+		FileInputStream fI = null;
+		Extracto[] listaExtractos = new Extracto[0];
+		try {
+			fI = new FileInputStream(archivo);
+			oI = new ObjectInputStream(fI);
+			while (fI.available() > 0) {
+				Extracto p = (Extracto) oI.readObject();
+				listaExtractos=Arrays.copyOf(listaExtractos, listaExtractos.length+1);
+				listaExtractos[listaExtractos.length-1]=p;
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("problemas con la direcion para leer el fichero");
+		} catch (IOException e) {
+			System.out.println("el fichero tiene problemas al leerlo");
+		} catch (ClassNotFoundException e) {
+			System.out.println("problema al leer fichero");
+		} finally {
+			try {
+				oI.close();
+			} catch (IOException e) {
+				System.out.println("el fichero tiene problemas al leerlo");
+			}
+		}
+		if (listaExtractos.length == 0) {
+			return null;
+		} else {
+			return listaExtractos;
+		}
+	}
+	
+	
 
 }

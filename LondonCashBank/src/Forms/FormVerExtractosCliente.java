@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import clasesBanco.Cliente;
+import clasesBanco.Extracto;
+import clasesBanco.Utilidades;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -45,21 +48,25 @@ public class FormVerExtractosCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(46, 75, 616, 288);
 		contentPane.add(scrollPane);
 
-		String[] titulos = { "Tipo transacción", "Fecha", "Valor", "Actor" };//se crea un arreglo con los titulos de las columnas que queremos mostrar en tabla
-		DefaultTableModel modelo = new DefaultTableModel(titulos, 0);//creamos un objeto DefaultTableModel al que le agregamos los titulos en las columnas, la cantidad de filas es cero
+		String[] titulos = { "Tipo transacci�n", "Fecha", "Valor", "Actor" };// se crea un arreglo con los titulos de
+																				// las columnas que queremos mostrar en
+																				// tabla
+		DefaultTableModel modelo = new DefaultTableModel(titulos, 0);// creamos un objeto DefaultTableModel al que le
+																		// agregamos los titulos en las columnas, la
+																		// cantidad de filas es cero
 
-		table = new JTable(modelo); //a la tabla que creamos en el designer le asignamos el objeto DefaultTableModel
-		
-		String[] cuentas = { "ahorros", "corriente", "nomina" };//se crea un arreglo de los items que queremos mostrar en el comboBox
+		table = new JTable(modelo); // a la tabla que creamos en el designer le asignamos el objeto
+									// DefaultTableModel
+
+		String[] cuentas = { "ahorros", "corriente", "nomina" };// se crea un arreglo de los items que queremos mostrar
+																// en el comboBox
 		scrollPane.setViewportView(table);
-		JComboBox comboBox = new JComboBox(cuentas);//asignamos el arreglo al comboBox
-		comboBox.addItem("guillermo");//tambien se pueden añadir items al comboBox individuales
+		JComboBox comboBox = new JComboBox(cuentas);// asignamos el arreglo al comboBox
+		comboBox.addItem("guillermo");// tambien se pueden añadir items al comboBox individuales
 		comboBox.setBounds(509, 39, 156, 24);
 		contentPane.add(comboBox);
 
@@ -69,19 +76,27 @@ public class FormVerExtractosCliente extends JFrame {
 
 				int numeroFilas = modelo.getRowCount();
 				for (int i = numeroFilas - 1; i >= 0; i--) {
-					modelo.removeRow(i);//este ciclo borra las filas del modelo de tabla de abajo hacia arriba
+					modelo.removeRow(i);// este ciclo borra las filas del modelo de tabla de abajo hacia arriba
 				}
-				if (cliente.getExtracto() == null) {
-					JOptionPane.showMessageDialog(btnGenerarExtracto, "no hay extractos para este cliente");//generar mensaje emergente
+				Extracto[] auxiliar = Utilidades.leerArchivoObjeto(cliente.getIdCliente().concat(".txt"));
+				if (auxiliar == null) {
+					JOptionPane.showMessageDialog(btnGenerarExtracto, "no hay extractos para este cliente");// generar
+																											// mensaje
+																											// emergente
 				} else {
-					if (comboBox.getSelectedItem() == "guillermo") {//asi podemos preguntar por el item seleccionado del comboBox
-						for (int i = 0; i < cliente.getExtracto().length; i++) {
-							String[] valores = {cliente.getExtracto()[i].getTipoTransaccion(),cliente.getExtracto()[i].getFecha(),cliente.getExtracto()[i].getValor(),cliente.getExtracto()[i].getNombreActor()};
-							modelo.addRow(valores); //todos los valores que deseamos incluir en nuestra tabla los pedimos y
-							//los ingresamos en un arreglo de valores que luego le pasamos a la tabla como una fila
+					if (comboBox.getSelectedItem() == "guillermo") {// asi podemos preguntar por el item seleccionado
+																	// del comboBox
+						for (int i = 0; i < auxiliar.length; i++) {
+							String[] valores = { auxiliar[i].getTipoTransaccion(), auxiliar[i].getFecha(),
+									cliente.getExtracto()[i].getValor(), auxiliar[i].getNombreActor() };
+							modelo.addRow(valores); // todos los valores que deseamos incluir en nuestra tabla los
+													// pedimos y
+							// los ingresamos en un arreglo de valores que luego le pasamos a la tabla como
+							// una fila
 						}
+						auxiliar = null;
 					} else {
-						JOptionPane.showMessageDialog(btnGenerarExtracto, "No se puede mostrar la información");
+						JOptionPane.showMessageDialog(btnGenerarExtracto, "No se puede mostrar la informaci�n");
 					}
 				}
 			}
