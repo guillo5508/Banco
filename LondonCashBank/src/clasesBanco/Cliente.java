@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
+import Forms.FormLogin;
 import Forms.FormVerExtractosCliente;
 
 public abstract class Cliente implements Serializable {
@@ -435,6 +436,8 @@ public abstract class Cliente implements Serializable {
 			System.out.println(guillermo.getListaProductos()[0].isEstadoCuenta());
 			FormVerExtractosCliente principal = new FormVerExtractosCliente(guillermo);
 			principal.setVisible(true);
+			FormLogin login = new FormLogin();
+			login.setVisible(true);
 		} catch (ExceptionCliente e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());

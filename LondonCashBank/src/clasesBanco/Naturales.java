@@ -19,6 +19,11 @@ public class Naturales extends Cliente implements Serializable {
 		super(nombre, direccion, profesion, empresaDondeTrabaja, telefono, tipoCliente, listaProductos, idCliente, claveAcceso);
 		// TODO Auto-generated constructor stub
 	}
+
+	public Naturales(String nombre, String direccion, String profesion, String empresaDondeTrabaja, String telefono,
+			String idCliente, String claveAcceso) {
+		// TODO Auto-generated constructor stub
+	}
 	
 
 }

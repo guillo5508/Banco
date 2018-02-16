@@ -9,9 +9,68 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.JLabel;
 
 public class Utilidades {
+	
+	static String hora, minutos, segundos, ampm;
+	static Calendar calendario;
+	
+	
+	
+	
+	public static void calcula() {
+		Calendar calendario = new GregorianCalendar();
+		Date fechaHoraActual = new Date();
+
+		calendario.setTime(fechaHoraActual);
+		ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+
+		if (ampm.equals("PM")) {
+			int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+			hora = h > 9 ? "" + h : "0" + h;
+		} else {
+			hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY)
+					: "0" + calendario.get(Calendar.HOUR_OF_DAY);
+		}
+		minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE)
+				: "0" + calendario.get(Calendar.MINUTE);
+		segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND)
+				: "0" + calendario.get(Calendar.SECOND);
+	}
+	
+	
+	public static void run(JLabel lbHora, Thread h1) {
+		Thread ct = Thread.currentThread();
+		while (ct == h1) {
+			calcula();
+			lbHora.setText(hora + ":" + minutos + ":" + segundos + " " + ampm);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	
+	
+
+
+	/**
+	 * Launch the application.
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static boolean isNumeric(String cadena) {
 		try {
@@ -139,6 +198,21 @@ public class Utilidades {
 			return listaExtractos;
 		}
 	}
+	
+	public static String crearIdServicio() {
+		Calendar calendario = Calendar.getInstance();
+		calendario = new GregorianCalendar();
+		String hora, minutos, segundos;
+		hora = Integer.toString(calendario.get(Calendar.HOUR_OF_DAY));
+		minutos = Integer.toString(calendario.get(Calendar.MINUTE));
+		segundos = Integer.toString(calendario.get(Calendar.SECOND));
+		String i = hora + minutos + segundos;
+		return i;
+	}
+	
+	
+	
+	
 	
 	
 
