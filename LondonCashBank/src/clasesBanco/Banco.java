@@ -1,62 +1,79 @@
 package clasesBanco;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Banco implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5787451824509045998L;
-	private Naturales[] listaClientesNaturales= new Naturales[0];
-	private Juridicos[] listaClientesJuridicos = new Juridicos[0];
-	private SPagoNomina[] listaSPagoNomina= new SPagoNomina[0];
-	private SAñadirNomina[] listaSAñadirNomina = new SAñadirNomina[0];
+	private ArrayList<Cliente> listaClientesNaturales = new ArrayList<Cliente>();
+	private ArrayList<Cliente> listaClientesJuridicos = new ArrayList<Cliente>();
+	private Queue<SPagoNomina> listaSPagoNomina = new LinkedList<SPagoNomina>();
+	private Queue<SAñadirNomina> listaSAñadirNomina = new LinkedList<SAñadirNomina>();
 	private Gerente gerente;
-	private Asesor[] listaAsesores= new Asesor[0];
-	private Cajero[] listaCajeros= new Cajero[0];
-	private Extracto[] listaMovimientosEmpleados= new Extracto[0];
-	
-	
+	private ArrayList<Asesor> listaAsesores = new ArrayList<Asesor>();
+	private ArrayList<Cajero> listaCajeros = new ArrayList<Cajero>();
+	private ArrayList<Extracto> listaMovimientosEmpleados = new ArrayList<Extracto>();
 
-	public Extracto[] getListaMovimientosEmpleados() {
-		return listaMovimientosEmpleados;
-	}
-
-	public void setListaMovimientosEmpleados(Extracto[] listaMovimientosEmpleados) {
-		this.listaMovimientosEmpleados = listaMovimientosEmpleados;
-	}
-
-	public Naturales[] getListaClientesNaturales() {
+	public ArrayList<Cliente> getListaClientesNaturales() {
 		return listaClientesNaturales;
 	}
 
-	public void setListaClientesNaturales(Naturales[] listaClientesNaturales) {
+	public void setListaClientesNaturales(ArrayList<Cliente> listaClientesNaturales) {
 		this.listaClientesNaturales = listaClientesNaturales;
 	}
 
-	public Juridicos[] getListaClientesJuridicos() {
+	public ArrayList<Cliente> getListaClientesJuridicos() {
 		return listaClientesJuridicos;
 	}
 
-	public void setListaClientesJuridicos(Juridicos[] listaClientesJuridicos) {
+	public void setListaClientesJuridicos(ArrayList<Cliente> listaClientesJuridicos) {
 		this.listaClientesJuridicos = listaClientesJuridicos;
 	}
 
-	public SPagoNomina[] getListaSPagoNomina() {
+	public Queue<SPagoNomina> getListaSPagoNomina() {
 		return listaSPagoNomina;
 	}
 
-	public void setListaSPagoNomina(SPagoNomina[] listaSPagoNomina) {
+	public void setListaSPagoNomina(Queue<SPagoNomina> listaSPagoNomina) {
 		this.listaSPagoNomina = listaSPagoNomina;
 	}
 
-	public SAñadirNomina[] getListaSAñadirNomina() {
+	public Queue<SAñadirNomina> getListaSAñadirNomina() {
 		return listaSAñadirNomina;
 	}
 
-	public void setListaSAñadirNomina(SAñadirNomina[] listaSAñadirNomina) {
+	public void setListaSAñadirNomina(Queue<SAñadirNomina> listaSAñadirNomina) {
 		this.listaSAñadirNomina = listaSAñadirNomina;
+	}
+
+	public ArrayList<Asesor> getListaAsesores() {
+		return listaAsesores;
+	}
+
+	public void setListaAsesores(ArrayList<Asesor> listaAsesores) {
+		this.listaAsesores = listaAsesores;
+	}
+
+	public ArrayList<Cajero> getListaCajeros() {
+		return listaCajeros;
+	}
+
+	public void setListaCajeros(ArrayList<Cajero> listaCajeros) {
+		this.listaCajeros = listaCajeros;
+	}
+
+	public ArrayList<Extracto> getListaMovimientosEmpleados() {
+		return listaMovimientosEmpleados;
+	}
+
+	public void setListaMovimientosEmpleados(ArrayList<Extracto> listaMovimientosEmpleados) {
+		this.listaMovimientosEmpleados = listaMovimientosEmpleados;
 	}
 
 	public Gerente getGerente() {
@@ -67,35 +84,15 @@ public class Banco implements Serializable {
 		this.gerente = gerente;
 	}
 
-	public Asesor[] getListaAsesores() {
-		return listaAsesores;
-	}
-
-	public void setListaAsesores(Asesor[] listaAsesores) {
-		this.listaAsesores = listaAsesores;
-	}
-
-	public Cajero[] getListaCajeros() {
-		return listaCajeros;
-	}
-
-	public void setListaCajeros(Cajero[] listaCajeros) {
-		this.listaCajeros = listaCajeros;
-	}
-
 	public Banco() {
 		super();
 	}
-	
-	public void crearExtractoBanco(String tipoTransaccion,String beneficiario, String valor, String tipoVentanilla, String idVentanilla,
-			String nombreActor) {
+
+	public void crearExtractoBanco(String tipoTransaccion, String beneficiario, String valor, String tipoVentanilla,
+			String idVentanilla, String nombreActor) {
 		Extracto extracto = new Extracto(Utilidades.getFechaActual() + " " + Utilidades.getHoraActual(),
-				tipoTransaccion,beneficiario, valor, tipoVentanilla, idVentanilla, nombreActor);
-		this.listaMovimientosEmpleados = Arrays.copyOf(this.listaMovimientosEmpleados, this.listaMovimientosEmpleados.length + 1);
-		this.listaMovimientosEmpleados[this.listaMovimientosEmpleados.length - 1] = extracto;
+				tipoTransaccion, beneficiario, valor, tipoVentanilla, idVentanilla, nombreActor);
+		listaMovimientosEmpleados.add(extracto);
 	}
-	
-	
-	
-	
+
 }

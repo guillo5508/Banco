@@ -103,8 +103,8 @@ public class FormLogin extends JFrame implements Runnable {
 				if (textField.getText().compareTo(banco.getGerente().getIdTrabajador()) == 0 && String
 						.valueOf(passwordField.getPassword()).compareTo(banco.getGerente().getClaveAcceso()) == 0) {
 					FormPrincipal ventana = new FormPrincipal(banco.getGerente());
-					ventana.setVisible(true);
 					dispose();
+					ventana.getFrame().setVisible(true);
 				}
 			}
 		});

@@ -1,6 +1,7 @@
 package clasesBanco;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Juridicos extends Cliente implements Serializable {
 
@@ -15,7 +16,7 @@ public class Juridicos extends Cliente implements Serializable {
 	}
 
 	public Juridicos(String nombre, String direccion, String profesion, String empresaDondeTrabaja, String telefono,
-			String tipoCliente, Productos[] listaProductos, String idCliente, String claveAcceso) {
+			String tipoCliente, ArrayList<Productos> listaProductos, String idCliente, String claveAcceso) {
 		super(nombre, direccion, profesion, empresaDondeTrabaja, telefono, tipoCliente, listaProductos, idCliente, claveAcceso);
 		// TODO Auto-generated constructor stub
 	}

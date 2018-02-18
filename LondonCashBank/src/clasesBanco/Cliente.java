@@ -1,8 +1,10 @@
 package clasesBanco;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import Forms.FormLogin;
 import Forms.FormVerExtractosCliente;
@@ -18,21 +20,17 @@ public abstract class Cliente implements Serializable {
 	private String empresaDondeTrabaja;
 	private String telefono;
 	private String tipoCliente;
-	private Productos[] listaProductos;
+	private ArrayList<Productos> listaProductos;
 	private String idCliente;
 	private String claveAcceso;
-	private Extracto[] listaExtractos;
-
-	public Extracto[] getExtracto() {
-		return listaExtractos;
-	}
+	private ArrayList<Extracto> listaExtractos;
 
 	public Cliente() {
 		super();
 	}
 
 	public Cliente(String nombre, String direccion, String profesion, String empresaDondeTrabaja, String telefono,
-			String tipoCliente, Productos[] listaProductos, String idCliente, String claveAcceso) {
+			String tipoCliente, ArrayList<Productos> listaProductos, String idCliente, String claveAcceso) {
 		super();
 		this.nombre = nombre;
 		this.direccion = direccion;
@@ -43,7 +41,23 @@ public abstract class Cliente implements Serializable {
 		this.listaProductos = listaProductos;
 		this.idCliente = idCliente;
 		this.claveAcceso = claveAcceso;
-		listaExtractos = new Extracto[0];
+		listaExtractos = new ArrayList<Extracto>();
+	}
+
+	public ArrayList<Productos> getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(ArrayList<Productos> listaProductos) {
+		this.listaProductos = listaProductos;
+	}
+
+	public ArrayList<Extracto> getListaExtractos() {
+		return listaExtractos;
+	}
+
+	public void setListaExtractos(ArrayList<Extracto> listaExtractos) {
+		this.listaExtractos = listaExtractos;
 	}
 
 	public String getNombre() {
@@ -94,14 +108,6 @@ public abstract class Cliente implements Serializable {
 		this.tipoCliente = tipoCliente;
 	}
 
-	public Productos[] getListaProductos() {
-		return listaProductos;
-	}
-
-	public void setListaProductos(Productos[] listaProductos) {
-		this.listaProductos = listaProductos;
-	}
-
 	public String getIdCliente() {
 		return idCliente;
 	}
@@ -118,7 +124,7 @@ public abstract class Cliente implements Serializable {
 		this.claveAcceso = claveAcceso;
 	}
 
-	public Cliente[] identificadorDeLista(String numCuenta, Banco banco) {
+	public ArrayList<Cliente> identificadorDeLista(String numCuenta, Banco banco) {
 		char identificador = numCuenta.charAt(0);
 		switch (identificador) {
 		case '0':
@@ -153,7 +159,7 @@ public abstract class Cliente implements Serializable {
 
 	public boolean cuentaActiva(String numCuenta, Banco banco) throws ExceptionCliente {
 		Posicion indice = buscarClienteCuenta(numCuenta, banco, tipoCuenta(numCuenta));
-		return identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice.getY()]
+		return identificadorDeLista(numCuenta, banco).get(indice.getX()).getListaProductos().get(indice.getY())
 				.isEstadoCuenta();
 
 	}
@@ -162,16 +168,16 @@ public abstract class Cliente implements Serializable {
 		int i = 0;
 		int j = 0;
 		Posicion posicion;
-		while (i < banco.getListaClientesNaturales().length
-				&& banco.getListaClientesNaturales()[i].getIdCliente().compareTo(idCliente) != 0) {
+		while (i < banco.getListaClientesNaturales().size()
+				&& banco.getListaClientesNaturales().get(i).getIdCliente().compareTo(idCliente) != 0) {
 			i++;
 		}
-		if (i == banco.getListaClientesNaturales().length) {
-			while (j < banco.getListaClientesJuridicos().length
-					&& banco.getListaClientesNaturales()[j].getIdCliente().compareTo(idCliente) != 0) {
+		if (i == banco.getListaClientesNaturales().size()) {
+			while (j < banco.getListaClientesJuridicos().size()
+					&& banco.getListaClientesNaturales().get(j).getIdCliente().compareTo(idCliente) != 0) {
 				j++;
 			}
-			if (j == banco.getListaClientesJuridicos().length) {
+			if (j == banco.getListaClientesJuridicos().size()) {
 				return null;
 			} else {
 				posicion = new Posicion(j, 1);
@@ -187,8 +193,7 @@ public abstract class Cliente implements Serializable {
 			String nombreActor, String beneficiario) {
 		Extracto extracto = new Extracto(Utilidades.getFechaActual() + " " + Utilidades.getHoraActual(),
 				tipoTransaccion, valor, tipoVentanilla, idVentanilla, nombreActor, beneficiario);
-		this.listaExtractos = Arrays.copyOf(this.listaExtractos, this.listaExtractos.length + 1);
-		this.listaExtractos[this.listaExtractos.length - 1] = extracto;
+		this.listaExtractos.add(extracto);
 
 	}
 
@@ -205,20 +210,20 @@ public abstract class Cliente implements Serializable {
 			} else {
 				if (claveNueva.compareTo(reClaveNueva) == 0) {
 					if (indice.getY() == 0) {
-						if (banco.getListaClientesNaturales()[indice.getX()].getClaveAcceso()
+						if (banco.getListaClientesNaturales().get(indice.getX()).getClaveAcceso()
 								.compareTo(claveAntigua) == 0) {
-							nombre = banco.getListaClientesNaturales()[indice.getX()].getNombre();
-							banco.getListaClientesNaturales()[indice.getX()].setClaveAcceso(reClaveNueva);
+							nombre = banco.getListaClientesNaturales().get(indice.getX()).getNombre();
+							banco.getListaClientesNaturales().get(indice.getX()).setClaveAcceso(reClaveNueva);
 							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre, nombre);
 							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
 							throw new ExceptionTransaccion("La clave antigua no coincide con la clave actual");
 						}
 					} else {
-						if (banco.getListaClientesJuridicos()[indice.getX()].getClaveAcceso()
+						if (banco.getListaClientesJuridicos().get(indice.getX()).getClaveAcceso()
 								.compareTo(claveAntigua) == 0) {
-							nombre = banco.getListaClientesJuridicos()[indice.getX()].getNombre();
-							banco.getListaClientesJuridicos()[indice.getX()].setClaveAcceso(reClaveNueva);
+							nombre = banco.getListaClientesJuridicos().get(indice.getX()).getNombre();
+							banco.getListaClientesJuridicos().get(indice.getX()).setClaveAcceso(reClaveNueva);
 							crearExtracto("Cambio de clave", "N/A", tipoVentanilla, idVentanilla, nombre, nombre);
 							Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 						} else {
@@ -236,27 +241,27 @@ public abstract class Cliente implements Serializable {
 		if (numCuenta.compareTo("") == 0 || tipoCuenta.compareTo("") == 0) {
 			throw new InputMismatchException("Los valores ingresados no pueden ser vacíos");
 		} else {
-			Cliente[] listaClientes = identificadorDeLista(numCuenta, banco);
+			ArrayList<Cliente> listaClientes = identificadorDeLista(numCuenta, banco);
 			if (listaClientes == null) {
 				throw new ExceptionCliente("Cuenta no existente en la lista del banco");
 			} else {
 				int i = 0;
 				int j = 0;
 				boolean k = false;
-				while (i < listaClientes.length && k == false) {
+				while (i < listaClientes.size() && k == false) {
 					j = 0;
-					while (j < listaClientes[i].getListaProductos().length
-							&& listaClientes[i].getListaProductos()[j].getNumCuenta().compareTo(numCuenta) != 0) {
+					while (j < listaClientes.get(i).getListaProductos().size() && listaClientes.get(i)
+							.getListaProductos().get(j).getNumCuenta().compareTo(numCuenta) != 0) {
 						j++;
 					}
-					if (j < listaClientes[i].getListaProductos().length
-							&& listaClientes[i].getListaProductos()[j].getTipoCUenta().compareTo(tipoCuenta) == 0) {
+					if (j < listaClientes.get(i).getListaProductos().size() && listaClientes.get(i).getListaProductos()
+							.get(j).getTipoCUenta().compareTo(tipoCuenta) == 0) {
 						k = true;
 					} else {
 						i++;
 					}
 				}
-				if (i == listaClientes.length) {
+				if (i == listaClientes.size()) {
 					return null;
 				} else {
 					Posicion posicion = new Posicion(i, j);
@@ -285,13 +290,13 @@ public abstract class Cliente implements Serializable {
 						if (identificadorDeLista(numCuenta, banco) == null) {
 							throw new ExceptionCliente("No hay Clientes en las listas del banco");
 						} else {
-							double aux = identificadorDeLista(numCuenta, banco)[indice.getX()]
-									.getListaProductos()[indice.getY()].getSaldo();
-							identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice.getY()]
-									.setSaldo(aux + Double.valueOf(valor));
+							double aux = identificadorDeLista(numCuenta, banco).get(indice.getX()).getListaProductos()
+									.get(indice.getY()).getSaldo();
+							identificadorDeLista(numCuenta, banco).get(indice.getX()).getListaProductos()
+									.get(indice.getY()).setSaldo(aux + Double.valueOf(valor));
 							if (operacion.compareTo("consignacion") == 0) {
 								crearExtracto("consignación", valor, tipoVentanilla, idVentanilla, nombreActor,
-										identificadorDeLista(numCuenta, banco)[indice.getX()].getNombre());
+										identificadorDeLista(numCuenta, banco).get(indice.getX()).getNombre());
 								Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 							}
 						}
@@ -320,19 +325,20 @@ public abstract class Cliente implements Serializable {
 						if (identificadorDeLista(numCuenta, banco) == null) {
 							throw new ExceptionCliente("No hay Clientes en las listas del banco");
 						} else {
-							if (identificadorDeLista(numCuenta, banco)[indice.getX()].getClaveAcceso()
+							if (identificadorDeLista(numCuenta, banco).get(indice.getX()).getClaveAcceso()
 									.compareTo(clave) != 0) {
 								throw new ExceptionTransaccion("La clave de acceso es invalida");
 							} else {
-								double aux = identificadorDeLista(numCuenta, banco)[indice.getX()]
-										.getListaProductos()[indice.getY()].getSaldo();
+								double aux = identificadorDeLista(numCuenta, banco).get(indice.getX())
+										.getListaProductos().get(indice.getY()).getSaldo();
 								if (aux < Double.valueOf(valor)) {
 									throw new ExceptionTransaccion(
 											"EL monto de la transaccion es mayor al saldo de la cuenta");
 								} else {
-									identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice
-											.getY()].setSaldo(aux - Double.valueOf(valor));
-									String nombre = identificadorDeLista(numCuenta, banco)[indice.getX()].getNombre();
+									identificadorDeLista(numCuenta, banco).get(indice.getX()).getListaProductos()
+											.get(indice.getY()).setSaldo(aux - Double.valueOf(valor));
+									String nombre = identificadorDeLista(numCuenta, banco).get(indice.getX())
+											.getNombre();
 									if (operacion.compareTo("retiro") == 0) {
 										crearExtracto("retiro", valor, tipoVentanilla, idVentanilla, nombre, nombre);
 										Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
@@ -373,12 +379,12 @@ public abstract class Cliente implements Serializable {
 								"transferencia");
 						consignar(numCuentaDestino, tipoCuentaDestino, monto, banco, "cajero", "1234", "guillermo",
 								"transferencia");
-						Cliente[] listaClientes = identificadorDeLista(numCuentaDestino, banco);
+						ArrayList<Cliente> listaClientes = identificadorDeLista(numCuentaDestino, banco);
 						Posicion i = buscarClienteCuenta(numCuentaDestino, banco, tipoCuentaDestino);
-						Cliente[] listaClientes1 = identificadorDeLista(numCuentaOrigen, banco);
+						ArrayList<Cliente> listaClientes1 = identificadorDeLista(numCuentaOrigen, banco);
 						Posicion j = buscarClienteCuenta(numCuentaOrigen, banco, tipoCuentaOrigen);
-						crearExtracto("transferencia", monto, "cajero", "1234", listaClientes1[j.getX()].getNombre(),
-								listaClientes[i.getX()].getNombre());
+						crearExtracto("transferencia", monto, "cajero", "1234",
+								listaClientes1.get(j.getX()).getNombre(), listaClientes.get(i.getX()).getNombre());
 						Utilidades.escribirArchivoObjeto(idCliente + ".txt", listaExtractos);
 					}
 				}
@@ -400,11 +406,11 @@ public abstract class Cliente implements Serializable {
 				if (indice == null) {
 					throw new ExceptionCuentas("Cuenta no encontrada");
 				} else {
-					String claveAcceso = identificadorDeLista(numCuenta, banco)[indice.getX()].getClaveAcceso();
+					String claveAcceso = identificadorDeLista(numCuenta, banco).get(indice.getX()).getClaveAcceso();
 					if (claveAcceso.compareTo(clave) != 0) {
 						throw new ExceptionTransaccion("La clave es incorrecta");
 					} else {
-						identificadorDeLista(numCuenta, banco)[indice.getX()].getListaProductos()[indice.getY()]
+						identificadorDeLista(numCuenta, banco).get(indice.getX()).getListaProductos().get(indice.getY())
 								.setEstadoCuenta(false);
 					}
 				}
@@ -412,7 +418,7 @@ public abstract class Cliente implements Serializable {
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		CuentaAhorros n = new CuentaAhorros("01468", "ahorros", true, "01/04/2015", 20000, "1234");
 		CuentaAhorros m = new CuentaCorriente("02469", "corriente", true, "01/04/2015", 0);
 		Productos[] lista = new Productos[2];
@@ -458,5 +464,5 @@ public abstract class Cliente implements Serializable {
 		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 }

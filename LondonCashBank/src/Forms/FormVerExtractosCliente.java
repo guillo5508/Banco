@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class FormVerExtractosCliente extends JFrame {
@@ -78,7 +79,7 @@ public class FormVerExtractosCliente extends JFrame {
 				for (int i = numeroFilas - 1; i >= 0; i--) {
 					modelo.removeRow(i);// este ciclo borra las filas del modelo de tabla de abajo hacia arriba
 				}
-				Extracto[] auxiliar = Utilidades.leerArchivoObjeto(cliente.getIdCliente().concat(".txt"));
+				ArrayList<Extracto> auxiliar = Utilidades.leerArchivoObjeto(cliente.getIdCliente().concat(".txt"));
 				if (auxiliar == null) {
 					JOptionPane.showMessageDialog(btnGenerarExtracto, "no hay extractos para este cliente");// generar
 																											// mensaje
@@ -86,9 +87,9 @@ public class FormVerExtractosCliente extends JFrame {
 				} else {
 					if (comboBox.getSelectedItem() == "guillermo") {// asi podemos preguntar por el item seleccionado
 																	// del comboBox
-						for (int i = 0; i < auxiliar.length; i++) {
-							String[] valores = { auxiliar[i].getTipoTransaccion(), auxiliar[i].getFecha(),
-									cliente.getExtracto()[i].getValor(), auxiliar[i].getNombreActor(), auxiliar[i].getBeneficiario()};
+						for (int i = 0; i < auxiliar.size(); i++) {
+							String[] valores = { auxiliar.get(i).getTipoTransaccion(), auxiliar.get(i).getFecha(),
+									cliente.getListaExtractos().get(i).getValor(), auxiliar.get(i).getNombreActor(), auxiliar.get(i).getBeneficiario()};
 							modelo.addRow(valores); // todos los valores que deseamos incluir en nuestra tabla los
 													// pedimos y
 							// los ingresamos en un arreglo de valores que luego le pasamos a la tabla como

@@ -1,102 +1,87 @@
 package Forms;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import clasesBanco.Trabajador;
-import clasesBanco.Utilidades;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import clasesBanco.Trabajador;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class FormPrincipal extends JFrame implements Runnable {
+public class FormPrincipal {
 
-	private JPanel contentPane;
-
-	Thread h1;
-	JLabel lbHora = new JLabel();
-
-	public void run() {
-		Utilidades.run(lbHora, h1);
-	}
+	private JFrame frame;
+	private Trabajador actor;
 
 	/**
 	 * Launch the application.
 	 */
 	/*
 	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { FormPrincipal frame = new
-	 * FormPrincipal(); frame.setVisible(true); } catch (Exception e) {
+	 * Runnable() { public void run() { try { FormPrincipal window = new
+	 * FormPrincipal(); window.frame.setVisible(true); } catch (Exception e) {
 	 * e.printStackTrace(); } } }); }
 	 */
 
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public FormPrincipal(Trabajador actor) {
-		h1 = new Thread(this);
-		h1.start();
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 620, 242);
+		this.actor = actor;
+		initialize();
+
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 572, 270);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		frame.setJMenuBar(menuBar);
 
-		JMenu mnFile = new JMenu("Archivo");
-		menuBar.add(mnFile);
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
 
-		JMenuItem mntmClose = new JMenuItem("Cerrar sesi\u00F3n");
-		mnFile.add(mntmClose);
+		JMenuItem mntmCerrarSesin = new JMenuItem("Cerrar sesi\u00F3n");
+		mnArchivo.add(mntmCerrarSesin);
+		if (actor.getClass().getSimpleName().compareTo("Gerente") == 0) {
+			System.out.println(actor.getClass().getSimpleName());
 
-		if (actor.getClass().getName().compareTo("Asesor") == 0) {
-
-			JMenu mnAsesor = new JMenu("Asesor");
-			menuBar.add(mnAsesor);
-
-			JMenuItem mntmCrearCliente = new JMenuItem("Crear cliente");
-			mnAsesor.add(mntmCrearCliente);
-
-			JMenuItem mntmCrearCuenta = new JMenuItem("A\u00F1adir cuenta");
-			mnAsesor.add(mntmCrearCuenta);
-
-			JMenuItem mntmDesbloquearCuenta = new JMenuItem("Desbloquear cuenta");
-			mnAsesor.add(mntmDesbloquearCuenta);
-
-			JMenuItem mntmNewMenuItem = new JMenuItem("Pagar nomina");
-			mnAsesor.add(mntmNewMenuItem);
-
-			JMenuItem mntmAadirANomina = new JMenuItem("A\u00F1adir a nomina");
-			mnAsesor.add(mntmAadirANomina);
-		} else if (actor.getClass().getName().compareTo("Gerente") == 0) {
 			JMenu mnGerente = new JMenu("Gerente");
 			menuBar.add(mnGerente);
 
 			JMenuItem mntmCrearTrabajador = new JMenuItem("Crear trabajador");
+			mntmCrearTrabajador.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
 			mnGerente.add(mntmCrearTrabajador);
 		}
 
+		JMenu mnAsesor = new JMenu("Asesor");
+		menuBar.add(mnAsesor);
+
+		JMenuItem mntmCrearUsuario = new JMenuItem("Crear usuario");
+		mnAsesor.add(mntmCrearUsuario);
+
 		JMenu mnCajero = new JMenu("Cajero");
 		menuBar.add(mnCajero);
-
-		JMenu mnAsesor_1 = new JMenu("Asesor");
-		menuBar.add(mnAsesor_1);
-
-		JMenuItem mntmCrearClienteNatural = new JMenuItem("Crear cliente natural");
-		mnAsesor_1.add(mntmCrearClienteNatural);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		lbHora.setBounds(491, 0, 103, 32);
-		contentPane.add(lbHora);
 	}
+
 }

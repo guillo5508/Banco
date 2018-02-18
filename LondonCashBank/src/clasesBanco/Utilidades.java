@@ -131,7 +131,7 @@ public class Utilidades {
 	
 	
 	
-	public static void escribirArchivoObjeto(String archivo, Object[] listaExtractos) {
+	public static void escribirArchivoObjeto(String archivo, ArrayList<Extracto> listaExtractos) {
 		FileOutputStream fo = null;
 		ObjectOutputStream oI = null;
 		try {
@@ -199,17 +199,16 @@ public class Utilidades {
 	
 	
 	
-	public static Extracto[] leerArchivoObjeto(String archivo) {
+	public static ArrayList<Extracto> leerArchivoObjeto(String archivo) {
 		ObjectInputStream oI = null;
 		FileInputStream fI = null;
-		Extracto[] listaExtractos = new Extracto[0];
+		ArrayList<Extracto> listaExtractos = new ArrayList<Extracto>();
 		try {
 			fI = new FileInputStream(archivo);
 			oI = new ObjectInputStream(fI);
 			while (fI.available() > 0) {
 				Extracto p = (Extracto) oI.readObject();
-				listaExtractos=Arrays.copyOf(listaExtractos, listaExtractos.length+1);
-				listaExtractos[listaExtractos.length-1]=p;
+				listaExtractos.add(p);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("problemas con la direcion para leer el fichero");
@@ -224,7 +223,7 @@ public class Utilidades {
 				System.out.println("el fichero tiene problemas al leerlo");
 			}
 		}
-		if (listaExtractos.length == 0) {
+		if (listaExtractos.size() == 0) {
 			return null;
 		} else {
 			return listaExtractos;
@@ -243,7 +242,36 @@ public class Utilidades {
 		return i;
 	}
 	
-	
+	public static Banco leerArchivoObjetoBanco(String archivo) {
+		ObjectInputStream oI = null;
+		FileInputStream fI = null;
+		Banco banco = new Banco();
+		try {
+			fI = new FileInputStream(archivo);
+			oI = new ObjectInputStream(fI);
+			while (fI.available() > 0) {
+				Banco p = (Banco) oI.readObject();
+				banco=p;
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("problemas con la direcion para leer el fichero");
+		} catch (IOException e) {
+			System.out.println("el fichero tiene problemas al leerlo");
+		} catch (ClassNotFoundException e) {
+			System.out.println("problema al leer fichero");
+		} finally {
+			try {
+				oI.close();
+			} catch (IOException e) {
+				System.out.println("el fichero tiene problemas al leerlo");
+			}
+		}
+		if (banco==null) {
+			return null;
+		} else {
+			return banco;
+		}
+	}
 	
 	
 	
