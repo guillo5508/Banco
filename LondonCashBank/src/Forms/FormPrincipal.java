@@ -5,6 +5,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import clasesBanco.Gerente;
 import clasesBanco.Trabajador;
 
 import java.awt.event.ActionListener;
@@ -59,8 +60,7 @@ public class FormPrincipal {
 
 		JMenuItem mntmCerrarSesin = new JMenuItem("Cerrar sesi\u00F3n");
 		mnArchivo.add(mntmCerrarSesin);
-		if (actor.getClass().getSimpleName().compareTo("Gerente") == 0) {
-			System.out.println(actor.getClass().getSimpleName());
+		if (actor instanceof Gerente) {
 
 			JMenu mnGerente = new JMenu("Gerente");
 			menuBar.add(mnGerente);

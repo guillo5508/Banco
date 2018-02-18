@@ -8,10 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clasesBanco.Banco;
+import clasesBanco.Posicion;
 import clasesBanco.Utilidades;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -24,11 +26,23 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class FormLogin extends JFrame implements Runnable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6786330703838411666L;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private Banco banco;
+	
+	
+
+	public Banco getBanco() {
+		return banco;
+	}
 
 	public JTextField getTextField() {
 		return textField;
@@ -59,17 +73,49 @@ public class FormLogin extends JFrame implements Runnable {
 		Utilidades.run(lbHora, h1);
 	}
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { FormLogin frame = new FormLogin();
-	 * frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
-	 * }
-	 */
+	/*public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FormLogin frame = new FormLogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}*/
 
 	/**
 	 * Create the frame.
+	
 	 */
+	public Posicion buscarTrabajador(String id, Banco banco) {
+		int i=0;
+		while(i<banco.getListaAsesores().size() && banco.getListaAsesores().get(i).getIdTrabajador().compareTo(id)!=0) {
+			i++;
+		}
+		if(i==banco.getListaAsesores().size()) {
+			i=0;
+			while(i<banco.getListaCajeros().size() && banco.getListaCajeros().get(i).getIdTrabajador().compareTo("id")!=0) {
+				i++;
+			}
+			if(i==banco.getListaCajeros().size()) {
+				return null;
+			}else {
+				Posicion indice = new Posicion(i, 1);
+				return indice;
+			}
+		}else {
+			Posicion indice = new Posicion(i, 0);
+			return indice;
+		}
+	}
+	
+	
+	
 	public FormLogin(Banco banco) {
+		this.banco = banco;
 		h1 = new Thread(this);
 		h1.start();
 		setResizable(false);
@@ -105,6 +151,25 @@ public class FormLogin extends JFrame implements Runnable {
 					FormPrincipal ventana = new FormPrincipal(banco.getGerente());
 					dispose();
 					ventana.getFrame().setVisible(true);
+				}else {
+					Posicion indice = buscarTrabajador(textField.getText(), banco);
+					if(indice ==null) {
+						JOptionPane.showMessageDialog(null, "El usuario no se encuentra en las listas del banco");
+					}else {
+						if(indice.getY()==0) {
+							if(banco.getListaAsesores().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
+								FormPrincipal ventana = new FormPrincipal(banco.getListaAsesores().get(indice.getX()));
+								dispose();
+								ventana.getFrame().setVisible(true);
+							}
+						}else {
+							if(banco.getListaCajeros().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
+								FormPrincipal ventana = new FormPrincipal(banco.getListaCajeros().get(indice.getX()));
+								dispose();
+								ventana.getFrame().setVisible(true);
+							}
+						}
+					}
 				}
 			}
 		});

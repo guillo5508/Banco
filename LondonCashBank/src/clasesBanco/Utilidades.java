@@ -30,8 +30,11 @@ public class Utilidades {
 		ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
 
 		if (ampm.equals("PM")) {
-			int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+			int h = calendario.get(Calendar.HOUR_OF_DAY)-12;
 			hora = h > 9 ? "" + h : "0" + h;
+			if(h==0) {
+				hora=""+"12";
+			}
 		} else {
 			hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY)
 					: "0" + calendario.get(Calendar.HOUR_OF_DAY);
