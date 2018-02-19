@@ -102,7 +102,7 @@ public class Banco implements Serializable {
 		}
 		if(i==banco.getListaAsesores().size()) {
 			i=0;
-			while(i<banco.getListaCajeros().size() && banco.getListaCajeros().get(i).getIdTrabajador().compareTo("id")!=0) {
+			while(i<banco.getListaCajeros().size() && banco.getListaCajeros().get(i).getIdTrabajador().compareTo(id)!=0) {
 				i++;
 			}
 			if(i==banco.getListaCajeros().size()) {

@@ -97,6 +97,7 @@ public class FormBorrarEmpleado extends JFrame {
 						if(banco.getListaAsesores().get(indice.getX()).getCargo().compareTo(String.valueOf(cbxCargo.getSelectedItem()))==0) {
 							FormLogincito logincito = new FormLogincito(gerente, banco ,txtId.getText());
 							logincito.setVisible(true);
+							banco.crearExtractoBanco("Borrado de empleado", banco.getListaAsesores().get(indice.getX()).getNombre(), "N/A", "Gerencia", gerente.getOficina(), gerente.getNombre());
 							txtId.setText("");
 						}else {
 							JOptionPane.showMessageDialog(contentPane, "El usuario no pertenece al cargo establecido");
@@ -105,6 +106,7 @@ public class FormBorrarEmpleado extends JFrame {
 						if(banco.getListaCajeros().get(indice.getX()).getCargo().compareTo(String.valueOf(cbxCargo.getSelectedItem()))==0) {
 							FormLogincito logincito = new FormLogincito(gerente, banco ,txtId.getText());
 							logincito.setVisible(true);
+							banco.crearExtractoBanco("Borrado de empleado", banco.getListaCajeros().get(indice.getX()).getNombre(), "N/A", "Gerencia", gerente.getOficina(), gerente.getNombre());
 							txtId.setText("");
 						}
 					}
