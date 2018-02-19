@@ -5,7 +5,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import clasesBanco.Asesor;
 import clasesBanco.Banco;
+import clasesBanco.Cajero;
 import clasesBanco.Gerente;
 import clasesBanco.Trabajador;
 import clasesBanco.Utilidades;
@@ -79,7 +81,7 @@ public class FormPrincipal implements Serializable {
 			}
 		});
 		mnArchivo.add(mntmCerrarSesin);
-	//	if (actor instanceof Gerente) {
+		if (actor instanceof Gerente) {
 
 			JMenu mnGerente = new JMenu("Gerente");
 			menuBar.add(mnGerente);
@@ -91,8 +93,17 @@ public class FormPrincipal implements Serializable {
 					empleado.setVisible(true);
 				}
 			});
+
+			JMenuItem mntmCambiarContrasea_2 = new JMenuItem("Cambiar contrase\u00F1a");
+			mntmCambiarContrasea_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					cambiar.setVisible(true);
+				}
+			});
+			mnGerente.add(mntmCambiarContrasea_2);
 			mnGerente.add(mntmCrearTrabajador);
-			
+
 			JMenuItem mntmBorrarTrabajador = new JMenuItem("Borrar trabajador");
 			mntmBorrarTrabajador.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -100,16 +111,135 @@ public class FormPrincipal implements Serializable {
 					borrar.setVisible(true);
 				}
 			});
+
+			JMenuItem mntmModificarCargoTrabajador = new JMenuItem("Modificar cargo trabajador");
+			mntmModificarCargoTrabajador.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			mnGerente.add(mntmModificarCargoTrabajador);
+
+			JMenuItem mntmPagarNomina = new JMenuItem("Pagar nomina");
+			mntmPagarNomina.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnGerente.add(mntmPagarNomina);
 			mnGerente.add(mntmBorrarTrabajador);
-	//	}
 
-		JMenu mnAsesor = new JMenu("Asesor");
-		menuBar.add(mnAsesor);
+			JMenuItem mntmBorrarCliente = new JMenuItem("Borrar cliente");
+			mntmBorrarCliente.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnGerente.add(mntmBorrarCliente);
 
-		JMenuItem mntmCrearUsuario = new JMenuItem("Crear usuario");
-		mnAsesor.add(mntmCrearUsuario);
+			JMenuItem mntmVerExtractosDel = new JMenuItem("Ver movimientos del banco");
+			mntmVerExtractosDel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnGerente.add(mntmVerExtractosDel);
 
-		JMenu mnCajero = new JMenu("Cajero");
-		menuBar.add(mnCajero);
+			JMenuItem mntmCerrarDa = new JMenuItem("Cerrar d\u00EDa");
+			mntmCerrarDa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnGerente.add(mntmCerrarDa);
+		}
+
+		if (actor instanceof Asesor) {
+
+			JMenu mnAsesor = new JMenu("Asesor");
+			menuBar.add(mnAsesor);
+
+			JMenuItem mntmCrearUsuario = new JMenuItem("Crear usuario");
+			mntmCrearUsuario.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnAsesor.add(mntmCrearUsuario);
+
+			JMenuItem mntmAadirCuentaA = new JMenuItem("A\u00F1adir cuenta a usuario");
+			mntmAadirCuentaA.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+
+			JMenuItem mntmCambiarContrasea = new JMenuItem("Cambiar contrase\u00F1a");
+			mntmCambiarContrasea.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					cambiar.setVisible(true);
+				}
+			});
+			mnAsesor.add(mntmCambiarContrasea);
+			mnAsesor.add(mntmAadirCuentaA);
+
+			JMenuItem mntmPagarNomina_1 = new JMenuItem("Atender solicitud pago nomina");
+			mntmPagarNomina_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnAsesor.add(mntmPagarNomina_1);
+
+			JMenuItem mntmAtenderSolicitudAgregar = new JMenuItem("Atender solicitud agregar a nomina");
+			mntmAtenderSolicitudAgregar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnAsesor.add(mntmAtenderSolicitudAgregar);
+
+			JMenuItem mntmDesbloquearCuenta = new JMenuItem("Desbloquear cuenta");
+			mntmDesbloquearCuenta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnAsesor.add(mntmDesbloquearCuenta);
+		}
+
+		if (actor instanceof Cajero) {
+
+			JMenu mnCajero = new JMenu("Cajero");
+			menuBar.add(mnCajero);
+
+			JMenuItem mntmConsignacin = new JMenuItem("Consignaci\u00F3n");
+			mntmConsignacin.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+
+			JMenuItem mntmCambiarContrasea_1 = new JMenuItem("Cambiar contrase\u00F1a");
+			mntmCambiarContrasea_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					cambiar.setVisible(true);
+				}
+			});
+			mnCajero.add(mntmCambiarContrasea_1);
+			mnCajero.add(mntmConsignacin);
+
+			JMenuItem mntmConsignacinInicial = new JMenuItem("Consignaci\u00F3n inicial");
+			mntmConsignacinInicial.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnCajero.add(mntmConsignacinInicial);
+
+			JMenuItem mntmTransferencia = new JMenuItem("Transferencia");
+			mntmTransferencia.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnCajero.add(mntmTransferencia);
+
+			JMenuItem mntmRetirar = new JMenuItem("Retirar");
+			mntmRetirar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			mnCajero.add(mntmRetirar);
+		}
 	}
 }

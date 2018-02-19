@@ -19,6 +19,7 @@ public class Banco implements Serializable {
 	private ArrayList<Asesor> listaAsesores = new ArrayList<Asesor>();
 	private ArrayList<Cajero> listaCajeros = new ArrayList<Cajero>();
 	private ArrayList<Extracto> listaMovimientosEmpleados = new ArrayList<Extracto>();
+	private double cajaFuerte;
 
 	public ArrayList<Cliente> getListaClientesNaturales() {
 		return listaClientesNaturales;
@@ -83,6 +84,14 @@ public class Banco implements Serializable {
 	public void setGerente(Gerente gerente) {
 		this.gerente = gerente;
 	}
+	
+	public double getCajaFuerte() {
+		return cajaFuerte;
+	}
+
+	public void setCajaFuerte(double cajaFuerte) {
+		this.cajaFuerte = cajaFuerte;
+	}
 
 	public Banco() {
 		super();
@@ -116,5 +125,7 @@ public class Banco implements Serializable {
 			return indice;
 		}
 	}
+
+	
 
 }
