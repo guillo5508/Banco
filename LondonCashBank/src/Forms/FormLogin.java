@@ -27,9 +27,10 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class FormLogin extends JFrame implements Runnable {
+public class FormLogin extends JFrame implements Runnable, Serializable {
 	/**
 	 * 
 	 */
@@ -90,27 +91,7 @@ public class FormLogin extends JFrame implements Runnable {
 	 * Create the frame.
 	
 	 */
-	public Posicion buscarTrabajador(String id, Banco banco) {
-		int i=0;
-		while(i<banco.getListaAsesores().size() && banco.getListaAsesores().get(i).getIdTrabajador().compareTo(id)!=0) {
-			i++;
-		}
-		if(i==banco.getListaAsesores().size()) {
-			i=0;
-			while(i<banco.getListaCajeros().size() && banco.getListaCajeros().get(i).getIdTrabajador().compareTo("id")!=0) {
-				i++;
-			}
-			if(i==banco.getListaCajeros().size()) {
-				return null;
-			}else {
-				Posicion indice = new Posicion(i, 1);
-				return indice;
-			}
-		}else {
-			Posicion indice = new Posicion(i, 0);
-			return indice;
-		}
-	}
+	
 	
 	
 	
@@ -148,25 +129,29 @@ public class FormLogin extends JFrame implements Runnable {
 			public void actionPerformed(ActionEvent arg0) {
 				if (textField.getText().compareTo(banco.getGerente().getIdTrabajador()) == 0 && String
 						.valueOf(passwordField.getPassword()).compareTo(banco.getGerente().getClaveAcceso()) == 0) {
-					FormPrincipal ventana = new FormPrincipal(banco.getGerente());
+					FormPrincipal ventana = new FormPrincipal(banco.getGerente(),banco);
 					dispose();
 					ventana.getFrame().setVisible(true);
 				}else {
-					Posicion indice = buscarTrabajador(textField.getText(), banco);
+					Posicion indice = banco.buscarTrabajador(textField.getText(), banco);
 					if(indice ==null) {
 						JOptionPane.showMessageDialog(null, "El usuario no se encuentra en las listas del banco");
 					}else {
 						if(indice.getY()==0) {
 							if(banco.getListaAsesores().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
-								FormPrincipal ventana = new FormPrincipal(banco.getListaAsesores().get(indice.getX()));
+								FormPrincipal ventana = new FormPrincipal(banco.getListaAsesores().get(indice.getX()),banco);
 								dispose();
 								ventana.getFrame().setVisible(true);
+							}else {
+								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
 						}else {
 							if(banco.getListaCajeros().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
-								FormPrincipal ventana = new FormPrincipal(banco.getListaCajeros().get(indice.getX()));
+								FormPrincipal ventana = new FormPrincipal(banco.getListaCajeros().get(indice.getX()), banco);
 								dispose();
 								ventana.getFrame().setVisible(true);
+							}else {
+								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
 						}
 					}

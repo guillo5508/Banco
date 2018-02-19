@@ -21,10 +21,15 @@ import javax.swing.JPasswordField;
 import javax.rmi.CORBA.Util;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class FormInicialBanco extends JFrame {
+public class FormInicialBanco extends JFrame implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3631059025920553725L;
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtId;

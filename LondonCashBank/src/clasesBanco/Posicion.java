@@ -1,6 +1,12 @@
 package clasesBanco;
 
-public class Posicion {
+import java.io.Serializable;
+
+public class Posicion implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1828750091473757666L;
 	private int x;
 	private int y;
 	public int getX() {

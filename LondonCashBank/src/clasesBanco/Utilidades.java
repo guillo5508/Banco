@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,8 +15,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JLabel;
 
-public class Utilidades {
+public class Utilidades implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6664015919140112196L;
 	static String hora, minutos, segundos, ampm;
 	static Calendar calendario;
 	

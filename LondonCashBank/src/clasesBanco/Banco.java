@@ -94,5 +94,27 @@ public class Banco implements Serializable {
 				tipoTransaccion, beneficiario, valor, tipoVentanilla, idVentanilla, nombreActor);
 		listaMovimientosEmpleados.add(extracto);
 	}
+	
+	public Posicion buscarTrabajador(String id, Banco banco) {
+		int i=0;
+		while(i<banco.getListaAsesores().size() && banco.getListaAsesores().get(i).getIdTrabajador().compareTo(id)!=0) {
+			i++;
+		}
+		if(i==banco.getListaAsesores().size()) {
+			i=0;
+			while(i<banco.getListaCajeros().size() && banco.getListaCajeros().get(i).getIdTrabajador().compareTo("id")!=0) {
+				i++;
+			}
+			if(i==banco.getListaCajeros().size()) {
+				return null;
+			}else {
+				Posicion indice = new Posicion(i, 1);
+				return indice;
+			}
+		}else {
+			Posicion indice = new Posicion(i, 0);
+			return indice;
+		}
+	}
 
 }

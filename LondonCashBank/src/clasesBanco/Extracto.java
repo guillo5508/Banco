@@ -86,4 +86,5 @@ public class Extracto implements Serializable {
 		this.nombreActor = nombreActor;
 		this.beneficiario=beneficiario;
 	}
+	
 }
