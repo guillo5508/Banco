@@ -79,8 +79,7 @@ public class FormCambiarContraseña extends JFrame {
 						if (String.valueOf(passNuevo.getPassword())
 								.compareTo(String.valueOf(rePassNuevo.getPassword())) == 0 && String.valueOf(passNuevo.getPassword()).compareTo("")!=0  && String.valueOf(rePassNuevo.getPassword()).compareTo("")!=0) {
 							actor.setClaveAcceso(String.valueOf(passNuevo.getPassword()));
-							banco.crearExtractoBanco("Cambio de clave", actor.getNombre(), "N/A", actor.getCargo(),
-									actor.getOficina(), actor.getNombre());
+							banco.crearExtractoBanco("Cambio de clave", actor.getNombre(), "N/A", actor.getCargo(), actor.getOficina(), actor.getNombre());
 							dispose();
 						}else {
 							JOptionPane.showMessageDialog(contentPane, "No se puede verificar nueva contraseña, intente nuevamente");

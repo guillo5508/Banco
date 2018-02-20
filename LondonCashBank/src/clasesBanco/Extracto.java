@@ -75,8 +75,8 @@ public class Extracto implements Serializable {
 		this.idVentanilla = idVentanilla;
 	}
 
-	public Extracto(String fecha, String tipoTransaccion, String valor, String tipoVentanilla, String idVentanilla,
-			String nombreActor, String beneficiario) {
+	public Extracto(String fecha, String tipoTransaccion,String beneficiario, String valor, String tipoVentanilla, String idVentanilla,
+			String nombreActor) {
 		super();
 		this.fecha = fecha;
 		this.tipoTransaccion = tipoTransaccion;
