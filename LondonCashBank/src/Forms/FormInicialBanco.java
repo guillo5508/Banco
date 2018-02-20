@@ -151,7 +151,7 @@ public class FormInicialBanco extends JFrame implements Serializable {
 					} else {
 						Gerente gerente = new Gerente(txtNombre.getText(), txtId.getText(), txtDireccion.getText(),
 								txtTelefono.getText(), txtNumOficina.getText(), String.valueOf(pwAcceso.getPassword()),
-								"gerente");
+								"Gerente");
 						banco.setGerente(gerente);
 						dispose();
 						Utilidades.escribirArchivoBanco("london.txt", banco);

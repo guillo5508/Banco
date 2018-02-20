@@ -139,6 +139,8 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmVerExtractosDel = new JMenuItem("Ver movimientos del banco");
 			mntmVerExtractosDel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					FormGenerarMovimientos movimientos = new FormGenerarMovimientos((Gerente) actor, banco);
+					movimientos.setVisible(true);
 				}
 			});
 			mnGerente.add(mntmVerExtractosDel);

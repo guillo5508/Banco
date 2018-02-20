@@ -130,18 +130,18 @@ public class FormGenerarMovimientos extends JFrame {
 					JOptionPane.showMessageDialog(contentPane,
 							"Asegurese de ingresar bien lasfechas en las cuales desea generar reporte");
 				} else {
-					String fechaIni = String.valueOf(cbxMesIni.getSelectedItem())
-							+ String.valueOf(cbxDiaIni.getSelectedItem()) + txtAñoIni.getText();
-					String fechaFin = String.valueOf(cbxMesFin.getSelectedItem())
-							+ String.valueOf(cbxDiaFin.getSelectedItem()) + txtAñoFin.getText();
+					String fechaIni = String.valueOf(cbxMesIni.getSelectedItem())+"-"
+							+ String.valueOf(cbxDiaIni.getSelectedItem())+"-" + txtAñoIni.getText();
+					String fechaFin = String.valueOf(cbxMesFin.getSelectedItem())+"-"
+							+ String.valueOf(cbxDiaFin.getSelectedItem())+"-" + txtAñoFin.getText();
 					if (banco.getListaMovimientosEmpleados().isEmpty()) {
 						JOptionPane.showMessageDialog(contentPane, "No hay movimientos generados en el banco");
 					} else {
 						for (int i = 0; i < banco.getListaMovimientosEmpleados().size(); i++) {
-							if (banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 9)
-									.compareTo(fechaIni) >= 0
-									&& banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 9)
-											.compareTo(fechaFin) <= 0) {
+							if (banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 10)
+									.compareTo(fechaIni) <= 0
+									&& banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 10)
+											.compareTo(fechaFin) >= 0) {
 								String[] valores = {banco.getListaMovimientosEmpleados().get(i).getTipoTransaccion(),
 										banco.getListaMovimientosEmpleados().get(i).getFecha(),
 										banco.getListaMovimientosEmpleados().get(i).getBeneficiario(),
@@ -150,6 +150,8 @@ public class FormGenerarMovimientos extends JFrame {
 										banco.getListaMovimientosEmpleados().get(i).getIdVentanilla(),
 										banco.getListaMovimientosEmpleados().get(i).getNombreActor()};
 								modelo.addRow(valores);
+							}else {
+								JOptionPane.showMessageDialog(contentPane, "no se puede mostrar");
 							}
 						}
 					}
