@@ -60,7 +60,7 @@ public class FormInicialBanco extends JFrame implements Serializable {
 	public FormInicialBanco(Banco banco) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 625, 398);
+		setBounds(100, 100, 647, 398);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(135, 206, 235));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,9 +73,9 @@ public class FormInicialBanco extends JFrame implements Serializable {
 		contentPane.add(lblBienvenidoAlSistema);
 
 		JLabel lblParaEpezarDebemos = new JLabel(
-				"Para epezar, debemos rellenar la siguiente informaci\u00F3n acerca del gerente del banco:");
+				"Para empezar, debemos rellenar la siguiente informaci\u00F3n acerca del gerente del banco:");
 		lblParaEpezarDebemos.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
-		lblParaEpezarDebemos.setBounds(10, 73, 591, 26);
+		lblParaEpezarDebemos.setBounds(10, 73, 605, 26);
 		contentPane.add(lblParaEpezarDebemos);
 
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -141,7 +141,7 @@ public class FormInicialBanco extends JFrame implements Serializable {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int alerta = JOptionPane.showConfirmDialog(contentPane,
-						"¿Está seguro de que la infocmación es correcta?");
+						"¿Está seguro de que la información es correcta?");
 				if (alerta == 0) {
 					if (txtNombre.getText().compareTo("") == 0 || txtId.getText().compareTo("") == 0
 							|| txtDireccion.getText().compareTo("") == 0 || txtTelefono.getText().compareTo("") == 0
@@ -164,7 +164,7 @@ public class FormInicialBanco extends JFrame implements Serializable {
 		});
 		btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		btnAceptar.setBackground(Color.WHITE);
-		btnAceptar.setBounds(258, 321, 89, 23);
+		btnAceptar.setBounds(280, 321, 89, 23);
 		contentPane.add(btnAceptar);
 	}
 }

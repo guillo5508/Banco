@@ -115,6 +115,8 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmModificarCargoTrabajador = new JMenuItem("Modificar cargo trabajador");
 			mntmModificarCargoTrabajador.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					FormModificarCargoTrabajador modificar = new FormModificarCargoTrabajador((Gerente) actor, banco);
+					modificar.setVisible(true);
 				}
 			});
 			mnGerente.add(mntmModificarCargoTrabajador);
