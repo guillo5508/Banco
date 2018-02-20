@@ -92,7 +92,7 @@ public class Utilidades implements Serializable {
 	}
 	public static String getFechaActual() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formateador = new SimpleDateFormat("MM-dd-yyyy");
         return formateador.format(ahora);
     }
 	
@@ -104,7 +104,7 @@ public class Utilidades implements Serializable {
 
 	
 	public static synchronized Date deStringToDate(String fecha) {
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("MM-dd-yyyy");
         Date fechaEnviar = null;
         try {
             fechaEnviar = formatoDelTexto.parse(fecha);
@@ -238,7 +238,7 @@ public class Utilidades implements Serializable {
 		}
 	}
 	
-	public static String crearIdServicio() {
+	public static String crearIdCuenta() {
 		Calendar calendario = Calendar.getInstance();
 		calendario = new GregorianCalendar();
 		String hora, minutos, segundos, milisegundos;

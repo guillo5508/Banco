@@ -32,9 +32,9 @@ public class Asesor extends Trabajador implements Serializable {
 			} else {
 				Naturales cliente = new Naturales(nombre, direccion, profesion, empresaDondeTrabaja, telefono,
 						idCliente, claveAcceso);
-				CuentaAhorros cuentaAhorros = new CuentaAhorros("01" + Utilidades.crearIdServicio(), "ahorros", false,
+				CuentaAhorros cuentaAhorros = new CuentaAhorros("01" + Utilidades.crearIdCuenta(), "ahorros", false,
 						Utilidades.getFechaActual().concat(Utilidades.getHoraActual()), 0, "1234");
-				Tarjeta tarjeta = new Tarjeta(Utilidades.crearIdServicio(), "Debito", cuentaAhorros.getClave());
+				Tarjeta tarjeta = new Tarjeta(Utilidades.crearIdCuenta(), "Debito", cuentaAhorros.getClave());
 				cuentaAhorros.setTarjeta(tarjeta);
 				ArrayList<Productos> listaProductos = new ArrayList<Productos>(4);
 				listaProductos.set(0,cuentaAhorros);
