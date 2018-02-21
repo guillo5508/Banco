@@ -139,9 +139,9 @@ public class FormGenerarMovimientos extends JFrame {
 					} else {
 						for (int i = 0; i < banco.getListaMovimientosEmpleados().size(); i++) {
 							if (banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 10)
-									.compareTo(fechaIni) <= 0
+									.compareTo(fechaIni) >= 0
 									&& banco.getListaMovimientosEmpleados().get(i).getFecha().substring(0, 10)
-											.compareTo(fechaFin) >= 0) {
+											.compareTo(fechaFin) <= 0) {
 								String[] valores = {banco.getListaMovimientosEmpleados().get(i).getTipoTransaccion(),
 										banco.getListaMovimientosEmpleados().get(i).getFecha(),
 										banco.getListaMovimientosEmpleados().get(i).getBeneficiario(),

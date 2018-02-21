@@ -28,8 +28,8 @@ public class Gerente extends Trabajador implements Serializable {
 				Asesor asesor = new Asesor(nombre, idTrabajador, direccion, telefono, oficina, claveAcceso, cargo);
 				banco.getListaAsesores().add(asesor);
 				Extracto extracto = new Extracto(Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(),
-						"Nuevo asesor", "N/A", "Gerencia", banco.getGerente().getOficina(),
-						banco.getGerente().getNombre(), asesor.getNombre());
+						"Nuevo asesor",asesor.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
+						banco.getGerente().getNombre());
 				banco.getListaMovimientosEmpleados().add(extracto);
 
 				break;
@@ -37,8 +37,8 @@ public class Gerente extends Trabajador implements Serializable {
 				Cajero cajero = new Cajero(nombre, idTrabajador, direccion, telefono, oficina, claveAcceso, cargo);
 				banco.getListaCajeros().add(cajero);
 				Extracto extracto1 = new Extracto(Utilidades.getFechaActual()+" "+Utilidades.getHoraActual(),
-						"Nuevo Cajero", "N/A", "Gerencia", banco.getGerente().getOficina(),
-						banco.getGerente().getNombre(), cajero.getNombre());
+						"Nuevo Cajero",cajero.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
+						banco.getGerente().getNombre());
 				banco.getListaMovimientosEmpleados().add(extracto1);
 				break;
 			}
