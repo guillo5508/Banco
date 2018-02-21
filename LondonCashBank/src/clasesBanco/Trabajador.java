@@ -15,6 +15,9 @@ public abstract class Trabajador implements Serializable {
 	private String oficina;
 	private String claveAcceso;
 	private String cargo;
+	private CuentaNomina cuentaNomina;
+	
+	
 	
 	
 	
@@ -60,6 +63,12 @@ public abstract class Trabajador implements Serializable {
 	public void setClaveAcceso(String claveAcceso) {
 		this.claveAcceso = claveAcceso;
 	}
+	public CuentaNomina getCuentaNomina() {
+		return cuentaNomina;
+	}
+	public void setCuentaNomina(CuentaNomina cuentaNomina) {
+		this.cuentaNomina = cuentaNomina;
+	}
 	public Trabajador(String nombre, String idTrabajador, String direccion, String telefono, String oficina,
 			String claveAcceso, String cargo) {
 		super();
@@ -70,7 +79,9 @@ public abstract class Trabajador implements Serializable {
 		this.oficina = oficina;
 		this.claveAcceso = claveAcceso;
 		this.cargo = cargo;
+		cuentaNomina=null;
 	}
+	
 	
 	
 	

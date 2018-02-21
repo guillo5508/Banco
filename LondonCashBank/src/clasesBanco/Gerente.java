@@ -26,6 +26,9 @@ public class Gerente extends Trabajador implements Serializable {
 			switch (cargo) {
 			case "Asesor":
 				Asesor asesor = new Asesor(nombre, idTrabajador, direccion, telefono, oficina, claveAcceso, cargo);
+				CuentaNomina cuenta = new CuentaNomina("70"+Utilidades.crearIdCuenta(),"Nomina",true, Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(), 0, "1234");
+				Tarjeta tarjeta = new Tarjeta(Utilidades.crearIdCuenta(), "Debito", cuenta.getClave());
+				cuenta.setTarjeta(tarjeta);
 				banco.getListaAsesores().add(asesor);
 				Extracto extracto = new Extracto(Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(),
 						"Nuevo asesor",asesor.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
@@ -35,6 +38,9 @@ public class Gerente extends Trabajador implements Serializable {
 				break;
 			case "Cajero":
 				Cajero cajero = new Cajero(nombre, idTrabajador, direccion, telefono, oficina, claveAcceso, cargo);
+				CuentaNomina cuenta1 = new CuentaNomina("80"+Utilidades.crearIdCuenta(),"Nomina",true, Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(), 0, "1234");
+				Tarjeta tarjeta1 = new Tarjeta(Utilidades.crearIdCuenta(), "Debito", cuenta1.getClave());
+				cuenta1.setTarjeta(tarjeta1);
 				banco.getListaCajeros().add(cajero);
 				Extracto extracto1 = new Extracto(Utilidades.getFechaActual()+" "+Utilidades.getHoraActual(),
 						"Nuevo Cajero",cajero.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
