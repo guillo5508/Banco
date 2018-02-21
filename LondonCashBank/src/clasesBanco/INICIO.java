@@ -22,6 +22,7 @@ public class INICIO implements Serializable {
 			inicio.setVisible(true);
 		}else {
 			Banco banco = new Banco();
+			banco.setCajaFuerte(50000000);
 			FormInicialBanco inicio = new FormInicialBanco(banco);
 			inicio.setVisible(true);
 		}

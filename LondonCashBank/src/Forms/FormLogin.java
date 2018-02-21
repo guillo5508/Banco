@@ -38,8 +38,6 @@ public class FormLogin extends JFrame implements Runnable, Serializable {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private Banco banco;
-	
-	
 
 	public Banco getBanco() {
 		return banco;
@@ -74,27 +72,18 @@ public class FormLogin extends JFrame implements Runnable, Serializable {
 		Utilidades.run(lbHora, h1);
 	}
 
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormLogin frame = new FormLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { FormLogin frame = new FormLogin();
+	 * frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
+	 * }
+	 */
 
 	/**
 	 * Create the frame.
-	
+	 * 
 	 */
-	
-	
-	
-	
+
 	public FormLogin(Banco banco) {
 		this.banco = banco;
 		h1 = new Thread(this);
@@ -127,30 +116,38 @@ public class FormLogin extends JFrame implements Runnable, Serializable {
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (textField.getText().compareTo(banco.getGerente().getIdTrabajador()) == 0 && String
-						.valueOf(passwordField.getPassword()).compareTo(banco.getGerente().getClaveAcceso()) == 0) {
-					FormPrincipal ventana = new FormPrincipal(banco.getGerente(),banco);
-					dispose();
-					ventana.getFrame().setVisible(true);
-				}else {
+				if (textField.getText().compareTo(banco.getGerente().getIdTrabajador()) == 0) {
+					if (String.valueOf(passwordField.getPassword())
+							.compareTo(banco.getGerente().getClaveAcceso()) == 0) {
+						FormPrincipal ventana = new FormPrincipal(banco.getGerente(), banco);
+						dispose();
+						ventana.getFrame().setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+					}
+				} else {
 					Posicion indice = banco.buscarTrabajador(textField.getText(), banco);
-					if(indice ==null) {
+					if (indice == null) {
 						JOptionPane.showMessageDialog(null, "El usuario no se encuentra en las listas del banco");
-					}else {
-						if(indice.getY()==0) {
-							if(banco.getListaAsesores().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
-								FormPrincipal ventana = new FormPrincipal(banco.getListaAsesores().get(indice.getX()),banco);
+					} else {
+						if (indice.getY() == 0) {
+							if (banco.getListaAsesores().get(indice.getX()).getClaveAcceso()
+									.compareTo(String.valueOf(passwordField.getPassword())) == 0) {
+								FormPrincipal ventana = new FormPrincipal(banco.getListaAsesores().get(indice.getX()),
+										banco);
 								dispose();
 								ventana.getFrame().setVisible(true);
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
-						}else {
-							if(banco.getListaCajeros().get(indice.getX()).getClaveAcceso().compareTo(String.valueOf(passwordField.getPassword()))==0) {
-								FormPrincipal ventana = new FormPrincipal(banco.getListaCajeros().get(indice.getX()), banco);
+						} else {
+							if (banco.getListaCajeros().get(indice.getX()).getClaveAcceso()
+									.compareTo(String.valueOf(passwordField.getPassword())) == 0) {
+								FormPrincipal ventana = new FormPrincipal(banco.getListaCajeros().get(indice.getX()),
+										banco);
 								dispose();
 								ventana.getFrame().setVisible(true);
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
 						}
