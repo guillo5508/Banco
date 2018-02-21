@@ -4,10 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import clasesBanco.Asesor;
 import clasesBanco.Banco;
 import clasesBanco.Cajero;
+import clasesBanco.ExceptionGerente;
 import clasesBanco.Gerente;
 import clasesBanco.Trabajador;
 import clasesBanco.Utilidades;
@@ -97,7 +99,7 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmCambiarContrasea_2 = new JMenuItem("Cambiar contrase\u00F1a");
 			mntmCambiarContrasea_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					FormCambiarContraseña cambiar = new FormCambiarContraseña(actor, banco);
 					cambiar.setVisible(true);
 				}
 			});
@@ -124,12 +126,17 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmPagarNomina = new JMenuItem("Pagar nomina");
 			mntmPagarNomina.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String dia= "30";
-					String fechaActual = Utilidades.getFechaActual().substring(8);
-					if(fechaActual.compareTo(dia)==0) {
-						
+					int opcion = JOptionPane.showConfirmDialog(null,
+							"¿Está seguro de pagar la nomina de los empleados?");
+					if (opcion == 0) {
+						try {
+							((Gerente) actor).pagarNominaBanco(banco);
+						} catch (ExceptionGerente e1) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(null, e1.getMessage());
+						}
 					}
-					
+					;
 				}
 			});
 			mnGerente.add(mntmPagarNomina);
@@ -180,7 +187,7 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmCambiarContrasea = new JMenuItem("Cambiar contrase\u00F1a");
 			mntmCambiarContrasea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					FormCambiarContraseña cambiar = new FormCambiarContraseña(actor, banco);
 					cambiar.setVisible(true);
 				}
 			});
@@ -223,7 +230,7 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmCambiarContrasea_1 = new JMenuItem("Cambiar contrase\u00F1a");
 			mntmCambiarContrasea_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					FormCambiarContraseña cambiar= new FormCambiarContraseña(actor, banco);
+					FormCambiarContraseña cambiar = new FormCambiarContraseña(actor, banco);
 					cambiar.setVisible(true);
 				}
 			});

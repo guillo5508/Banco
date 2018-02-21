@@ -3,6 +3,8 @@ package clasesBanco;
 import java.io.File;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 public class Gerente extends Trabajador implements Serializable {
 
 	/**
@@ -117,4 +119,36 @@ public class Gerente extends Trabajador implements Serializable {
 			banco.crearExtractoBanco("Cambio de cargo",nombre , "N/A", "Gerencia", banco.getGerente().getOficina(), banco.getGerente().getNombre());
 		}
 	}
+	
+	public void pagarNominaBanco(Banco banco) throws ExceptionGerente {
+		String dia= "21";
+		String febrero= "02-28";
+		String fechaActual = Utilidades.getFechaActual().substring(5);
+		if(fechaActual.substring(3).compareTo(dia)==0 || fechaActual.compareTo(febrero)==0) {
+			if(banco.getCajaFuerte()==0) {
+				throw new ExceptionGerente("El banco no tiene dinero para pagar");
+			}else {//hay que cuadrar si las listas estan vacias
+				double sueldoAsesor=1500000;
+				double sueldoCajero=1300000;
+				double montoTotal=sueldoAsesor*banco.getListaAsesores().size() +sueldoCajero*banco.getListaCajeros().size();
+				if(montoTotal>banco.getCajaFuerte()) {
+					throw new ExceptionGerente("El valor total de nomina es superior al monto de caja fuerte");
+				}else {
+					for(int i=0;i<banco.getListaAsesores().size();i++) {
+						double saldoAnterior= banco.getListaAsesores().get(i).getCuentaNomina().getSaldo();
+						banco.getListaAsesores().get(i).getCuentaNomina().setSaldo(saldoAnterior+sueldoAsesor);
+					}
+					for(int i=0;i<banco.getListaCajeros().size();i++) {
+						double saldoAnterior=banco.getListaCajeros().get(i).getCuentaNomina().getSaldo();
+						banco.getListaCajeros().get(i).getCuentaNomina().setSaldo(saldoAnterior+sueldoCajero);
+					}
+					JOptionPane.showMessageDialog(null, "Transacción exitosa");
+				}
+				banco.crearExtractoBanco("Pago de nomina", "Empleados", String.valueOf(montoTotal), "Gerencia", banco.getGerente().getOficina(), banco.getGerente().getNombre());
+			}
+		}else {
+			throw new ExceptionGerente("No es día para pago de nomina");
+		}
+	}
+	
 }
