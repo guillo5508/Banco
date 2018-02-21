@@ -124,6 +124,12 @@ public class FormPrincipal implements Serializable {
 			JMenuItem mntmPagarNomina = new JMenuItem("Pagar nomina");
 			mntmPagarNomina.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String dia= "30";
+					String fechaActual = Utilidades.getFechaActual().substring(8);
+					if(fechaActual.compareTo(dia)==0) {
+						
+					}
+					
 				}
 			});
 			mnGerente.add(mntmPagarNomina);
