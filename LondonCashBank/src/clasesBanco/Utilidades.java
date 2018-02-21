@@ -92,7 +92,7 @@ public class Utilidades implements Serializable {
 	}
 	public static String getFechaActual() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
         return formateador.format(ahora);
     }
 	
@@ -104,7 +104,7 @@ public class Utilidades implements Serializable {
 
 	
 	public static synchronized Date deStringToDate(String fecha) {
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaEnviar = null;
         try {
             fechaEnviar = formatoDelTexto.parse(fecha);

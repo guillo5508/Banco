@@ -130,10 +130,10 @@ public class FormGenerarMovimientos extends JFrame {
 					JOptionPane.showMessageDialog(contentPane,
 							"Asegurese de ingresar bien lasfechas en las cuales desea generar reporte");
 				} else {
-					String fechaIni = String.valueOf(cbxMesIni.getSelectedItem())+"-"
-							+ String.valueOf(cbxDiaIni.getSelectedItem())+"-" + txtAñoIni.getText();
-					String fechaFin = String.valueOf(cbxMesFin.getSelectedItem())+"-"
-							+ String.valueOf(cbxDiaFin.getSelectedItem())+"-" + txtAñoFin.getText();
+					String fechaIni = txtAñoIni.getText()+"-"+String.valueOf(cbxMesIni.getSelectedItem())+"-"
+							+ String.valueOf(cbxDiaIni.getSelectedItem());
+					String fechaFin = txtAñoFin.getText()+"-"+String.valueOf(cbxMesFin.getSelectedItem())+"-"
+							+ String.valueOf(cbxDiaFin.getSelectedItem());
 					if (banco.getListaMovimientosEmpleados().isEmpty()) {
 						JOptionPane.showMessageDialog(contentPane, "No hay movimientos generados en el banco");
 					} else {

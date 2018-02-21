@@ -29,6 +29,7 @@ public class Gerente extends Trabajador implements Serializable {
 				CuentaNomina cuenta = new CuentaNomina("70"+Utilidades.crearIdCuenta(),"Nomina",true, Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(), 0, "1234");
 				Tarjeta tarjeta = new Tarjeta(Utilidades.crearIdCuenta(), "Debito", cuenta.getClave());
 				cuenta.setTarjeta(tarjeta);
+				asesor.setCuentaNomina(cuenta);
 				banco.getListaAsesores().add(asesor);
 				Extracto extracto = new Extracto(Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(),
 						"Nuevo asesor",asesor.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
@@ -41,6 +42,7 @@ public class Gerente extends Trabajador implements Serializable {
 				CuentaNomina cuenta1 = new CuentaNomina("80"+Utilidades.crearIdCuenta(),"Nomina",true, Utilidades.getFechaActual()+ " "+Utilidades.getHoraActual(), 0, "1234");
 				Tarjeta tarjeta1 = new Tarjeta(Utilidades.crearIdCuenta(), "Debito", cuenta1.getClave());
 				cuenta1.setTarjeta(tarjeta1);
+				cajero.setCuentaNomina(cuenta1);
 				banco.getListaCajeros().add(cajero);
 				Extracto extracto1 = new Extracto(Utilidades.getFechaActual()+" "+Utilidades.getHoraActual(),
 						"Nuevo Cajero",cajero.getNombre(), "N/A", "Gerencia", banco.getGerente().getOficina(),
@@ -88,6 +90,9 @@ public class Gerente extends Trabajador implements Serializable {
 							banco.getListaAsesores().get(indice.getX()).getDireccion(),
 							banco.getListaAsesores().get(indice.getX()).getTelefono(), oficina,
 							banco.getListaAsesores().get(indice.getX()).getClaveAcceso(), cargo);
+					cajero.setCuentaNomina(banco.getListaAsesores().get(indice.getX()).getCuentaNomina());
+					String numCuenta=cajero.getCuentaNomina().getNumCuenta().substring(2, cajero.getCuentaNomina().getNumCuenta().length());
+					cajero.getCuentaNomina().setNumCuenta("80"+numCuenta);
 					nombre = banco.getListaAsesores().get(indice.getX()).getNombre();
 					borrarTrabajador(id, banco);
 					banco.getListaCajeros().add(cajero);
@@ -101,6 +106,9 @@ public class Gerente extends Trabajador implements Serializable {
 							banco.getListaCajeros().get(indice.getX()).getDireccion(),
 							banco.getListaCajeros().get(indice.getX()).getTelefono(), oficina,
 							banco.getListaCajeros().get(indice.getX()).getClaveAcceso(), cargo);
+					asesor.setCuentaNomina(banco.getListaCajeros().get(indice.getX()).getCuentaNomina());
+					String numCuenta1 = asesor.getCuentaNomina().getNumCuenta().substring(2, asesor.getCuentaNomina().getNumCuenta().length());
+					asesor.getCuentaNomina().setNumCuenta("70"+numCuenta1);
 					nombre = banco.getListaCajeros().get(indice.getX()).getNombre();
 					borrarTrabajador(id, banco);
 					banco.getListaAsesores().add(asesor);
