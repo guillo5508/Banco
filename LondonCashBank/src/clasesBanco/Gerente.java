@@ -124,10 +124,13 @@ public class Gerente extends Trabajador implements Serializable {
 		String dia= "21";
 		String febrero= "02-28";
 		String fechaActual = Utilidades.getFechaActual().substring(5);
+		if(banco.getListaAsesores()==null || banco.getListaCajeros()==null) {
+			throw new ExceptionGerente("Las listas de clientes estan incompletas, verifique que hay empleados en el banco");
+		}
 		if(fechaActual.substring(3).compareTo(dia)==0 || fechaActual.compareTo(febrero)==0) {
 			if(banco.getCajaFuerte()==0) {
 				throw new ExceptionGerente("El banco no tiene dinero para pagar");
-			}else {//hay que cuadrar si las listas estan vacias
+			}else {
 				double sueldoAsesor=1500000;
 				double sueldoCajero=1300000;
 				double montoTotal=sueldoAsesor*banco.getListaAsesores().size() +sueldoCajero*banco.getListaCajeros().size();
